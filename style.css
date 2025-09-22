@@ -12,6 +12,7 @@ body {
     box-sizing: border-box;
 }
 
+
 #game-container {
     width: 100%;
     max-width: 480px; /* 모바일 화면에 적합한 최대 너비 */
@@ -20,6 +21,7 @@ body {
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     text-align: center;
+    position: relative; /* 토스트 알림 위치의 기준점 */
 }
 
 .screen {
@@ -64,6 +66,18 @@ button {
 
 button:hover {
     background-color: #018786;
+}
+
+/* --- 직감 특성 버튼 스타일 --- */
+#intuition-button {
+    margin-top: 15px;
+    background-color: #3700b3; /* 보라색 계열로 구분 */
+    color: #e0e0e0;
+}
+
+#intuition-button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
 }
 
 #choices-container, #perk-choices-container {
@@ -154,6 +168,20 @@ button:hover {
     font-weight: bold;
 }
 
+/* --- 상황 텍스트 페이드인 효과 --- */
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 /* 버튼 내의 강조 텍스트에는 가독성을 위한 그림자 추가 */
 button .highlight-yellow {
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
@@ -187,4 +215,111 @@ button .highlight-yellow {
 .fade-in-char {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+}
+
+/* --- 토스트 알림 스타일 --- */
+#toast-notification {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #e0e0e0;
+    padding: 16px 24px;
+    border-radius: 10px;
+    border: 1px solid #03dac6;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    text-align: center;
+    max-width: 80%;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    pointer-events: none; /* 토스트 뒤의 요소 클릭 방지 해제 */
+}
+
+#toast-notification.fade-out {
+    opacity: 0;
+}
+
+/* --- 디버그 패널 스타일 --- */
+#debug-panel {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    background-color: rgba(20, 20, 20, 0.95);
+    border: 2px solid #ff4136; /* Red border to indicate debug */
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 2000;
+    color: #fff;
+    font-size: 14px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#debug-panel h3, #debug-panel h4 {
+    color: #ff4136;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.debug-section {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #444;
+}
+
+#debug-panel label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+#debug-panel input[type="number"] {
+    width: 60px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+#debug-panel button {
+    background-color: #555;
+    color: #fff;
+    font-size: 12px;
+    padding: 6px 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    width: auto;
+}
+
+#debug-panel button:hover {
+    background-color: #777;
+}
+
+#debug-close-button {
+    background-color: #ff4136;
+    width: 100%;
+}
+
+#debug-parts-container, #debug-perks-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.debug-item {
+    background-color: #444;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #666;
+    user-select: none;
+}
+
+.debug-item.owned {
+    background-color: #018786;
+    border-color: #03dac6;
 }

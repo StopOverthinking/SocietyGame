@@ -471,4 +471,462 @@ const SITUATIONS = [
             }
         ]
     },
+    {
+        id: 16,
+        title: '미래를 위한 약속',
+        image: 'images/situation_16.png',
+        text: `당신은 덴마크의 입법자로서 새로운 작명법(Navneloven)의 초안을 만들고 있다. 개인의 자유가 우선되어야 한다는 의견이 있지만, 여전히 '<span class="highlight-yellow">개인의 자유가 공동체의 안정이나 다른 개인(특히 아동)의 복지를 해쳐서는 안 된다</span>'는 의견이 주류이다. 당신은 이러한 덴마크의 핵심 가치관을 법에 담아내야 한다. 어떤 법안을 발의하겠는가?`,
+        choices: [
+            { 
+                text: '개인의 자유를 최우선으로, 부모가 원하는 어떤 이름이든 등록할 수 있도록 전면 자유화한다.', 
+                isCorrect: false,
+                failureText: '잘못된 해석이다. 당신의 법안은 <span class="highlight-yellow">개인의 자유가 아동의 복지를 해칠 수 있다는 사회적 우려</span>를 전혀 반영하지 못했다. "자유가 방종이 되어서는 안 된다"는 거센 비판과 함께 법안은 부결되었다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '공동체의 안정을 최우선으로, 지정된 고유 이름 목록 외의 모든 현대적, 외국식 이름을 금지한다.', 
+                isCorrect: false,
+                failureText: '지나치게 경직된 법안이다. 당신의 법안은 <span class="highlight-yellow">개인의 자유를 존중해야 한다는 사회적 합의</span>를 무시했다는 비판을 받았다. "전통을 지키는 것이 개인의 권리를 억압하는 수단이 될 수는 없다"는 반대에 부딪혔다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '전통 이름 목록을 기본으로 제공하되, 목록에 없는 이름은 아동의 복지를 기준으로 심사 후 허용한다.', 
+                isCorrect: true,
+                successText: '정확한 판단이다. 당신의 법안은 아동의 복지와 공동체를 보호하는 틀 안에서 개인의 자유를 허용하는 방식으로, <span class="highlight-yellow">덴마크 사회의 핵심 가치관</span>을 완벽하게 구현했다. 법안은 폭넓은 지지를 받으며 통과되었다.',
+                info: {
+                    image: 'images/info_16.png',
+                    text: '덴마크의 <span class="highlight-yellow">\'작명법(Navneloven)\'</span>은 실제로 이러한 사회적 가치들의 타협점입니다. <span class="highlight-yellow">정부가 승인한 이름 목록</span>을 통해 문화유산을 지키고 아이를 보호하지만, 동시에 새로운 이름을 <span class="highlight-yellow">별도 심사를 통해 등록</span>할 수 있게 하여 변화와 자유를 수용합니다. 이는 법과 제도가 어떻게 사회의 다양한 가치를 조율하는지 보여주는 대표적인 사례입니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 17,
+        title: '태양을 피하는 방법',
+        image: 'images/situation_17.png',
+        text: `당신은 스페인 남부의 농부다. 여름의 태양은 믿을 수 없을 정도로 강렬하다. 오전에는 그럭저럭 일할 만하지만, 오후 2시가 넘어가면 <span class="highlight-yellow">공기가 아지랑이처럼 피어오를 정도로 기온이 치솟는다.</span><br><br>이글거리는 태양 아래에서 계속 일하는 것은 생산성을 급격히 떨어뜨릴 뿐만 아니라, 열사병의 위험을 부르는 <span class="highlight-yellow">매우 위험하고 비효율적인 행동</span>이다. 하지만 하루에 끝내야 할 일은 아직 많이 남아있다. 어떻게 하루의 노동 시간을 구성하는 것이 가장 현명할까?`,
+        choices: [
+            { 
+                text: '강한 정신력으로 버티며, 물을 많이 마시면서 계속 일한다.', 
+                isCorrect: false,
+                failureText: '무모한 선택이었다. 당신의 의지와는 상관없이, 끓어오르는 열기는 당신의 체력을 빠르게 고갈시켰다. 결국 당신은 <span class="highlight-yellow">탈진하여 쓰러졌고</span>, 그날의 일을 전혀 끝마치지 못했다. 자연의 힘을 의지만으로 이기려 한 것은 어리석었다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '가장 더운 시간에는 일을 멈추고 실내에서 긴 휴식을 취한 뒤, 해가 질 무렵 서늘해지면 다시 일을 시작한다.', 
+                isCorrect: true,
+                successText: '가장 효율적인 판단이다. 실내에서 충분한 휴식을 취한 당신은, 서늘해진 늦은 오후에 다시 밭으로 나갔다. <span class="highlight-yellow">재충전된 체력 덕분에 일의 능률은 최고조에 달했고</span>, 당신은 안전하고 빠르게 모든 일을 끝마칠 수 있었다.',
+                info: {
+                    image: 'images/info_17.png',
+                    text: '이것이 바로 스페인의 유명한 <span class="highlight-yellow">\'시에스타(Siesta)\'</span> 문화의 본질입니다. 시에스타는 게으름의 상징이 아니라, <span class="highlight-yellow">가장 덥고 비효율적인 시간을 피해</span> 에너지를 보존하고, 서늘한 시간에 다시 일의 능률을 높이는 <span class="highlight-yellow">매우 지혜로운 시간 관리 전략</span>입니다. 이는 뜨거운 기후라는 자연환경이 한 지역의 노동 문화와 생활 리듬을 어떻게 형성했는지 보여주는 대표적인 사례입니다.'
+                }
+            },
+            { 
+                text: '나무 그늘 밑으로 자리를 옮겨, 조금 느린 속도로 계속해서 일한다.', 
+                isCorrect: false,
+                successChance: 0.3,
+                successText: '그늘 덕분에 최악의 상황은 피할 수 있었다. 하지만 공기 전체가 뜨거웠기 때문에, 생산성은 오르지 않았고 <span class="highlight-yellow">오후 내내 무기력함과 싸워야 했다.</span> 당신은 일을 끝냈지만 평소보다 두 배의 시간을 허비했다.',
+                failureText: '그늘도 소용없었다. 땅에서 올라오는 열기와 뜨거운 공기는 당신을 끊임없이 지치게 만들었다. 결국 당신은 <span class="highlight-yellow">느려터진 속도로 겨우 일하는 흉내</span>만 냈을 뿐, 아무런 성과도 내지 못했다.<br> ❤️ -3',
+                failureDamage: 3
+            }
+        ]
+    },
+    {
+        id: 18,
+        title: '사막의 생존 의복',
+        image: 'images/situation_18.png',
+        text: `당신은 상인으로서 거대한 사우디아라비아의 사막을 횡단할 준비를 하고 있다. 사막의 환경은 극단적이다. 낮 동안에는 그늘 한 점 없는 곳에서 <span class="highlight-yellow">모든 것을 태워버릴 듯한 태양</span>이 내리쬔다. 또한, 이따금씩 <span class="highlight-yellow">뜨겁고 건조한 바람</span>이 불어와 피부에 닿는 모든 것을 따갑게 만드는 모래를 실어 나른다.<br><br>이 혹독한 환경에서 당신의 생존을 좌우할 가장 중요한 것은 바로 '의복'이다. 당신의 몸을 가장 효과적으로 보호하고 시원하게 유지해 줄 복장은 무엇일까?`,
+        choices: [
+            { 
+                text: '최대한 많은 피부를 노출시켜 땀을 증발시키기 위해, 반소매와 반바지를 입는다.', 
+                isCorrect: false,
+                failureText: '재앙과도 같은 선택이었다. 당신의 맨살은 <span class="highlight-yellow">강렬한 햇볕에 그대로 노출되어 심각한 화상</span>을 입었다. 또한, 건조한 바람은 당신의 땀을 너무 빨리 증발시켜 급격한 탈수 증상을 일으켰다. 당신은 얼마 못 가 쓰러지고 말았다.<br> ❤️ -7',
+                failureDamage: 7
+            },
+            { 
+                text: '햇빛을 반사하는 흰색의, 온몸을 덮는 헐렁한 긴 옷을 입는다.', 
+                isCorrect: true,
+                successText: '가장 현명한 판단이었다. 흰색의 긴 옷은 <span class="highlight-yellow">햇빛을 반사</span>해 몸이 뜨거워지는 것을 막아주었고, 헐렁한 품 덕분에 <span class="highlight-yellow">옷과 몸 사이로 공기가 순환</span>하며 오히려 시원함을 느낄 수 있었다. 당신은 쾌적하고 안전하게 사막을 여행했다.',
+                info: {
+                    image: 'images/info_18.png',
+                    text: '이 옷이 바로 아랍 문화권의 전통 의상 <span class="highlight-yellow">\'토브(Thobe)\'</span>입니다. 토브는 사막 기후에 대한 깊은 이해를 바탕으로 탄생한 과학적인 의복입니다. <span class="highlight-yellow">햇빛을 반사하는 밝은 색</span>, 피부를 보호하고 공기를 순환시키는 <span class="highlight-yellow">헐렁하고 긴 디자인</span>은 생존을 위한 최적의 선택이었습니다. 이는 전통 의상이 혹독한 자연환경을 이겨내기 위한 생존 기술의 집약체임을 보여줍니다.'
+                }
+            },
+            { 
+                text: '열을 잘 흡수하는 검은색의 몸에 딱 붙는 옷을 입어, 체온을 밖으로 방출한다.', 
+                isCorrect: false,
+                failureText: '완전히 잘못된 생각이었다. 검은 옷은 태양열을 그대로 흡수하여 당신의 몸을 오븐처럼 만들었다. 몸에 딱 붙는 디자인은 <span class="highlight-yellow">공기의 순환을 막아 열을 옷 안에 가두는</span> 최악의 결과를 낳았다. 당신은 극심한 더위로 고통받았다.<br> ❤️ -5',
+                failureDamage: 5
+            }
+        ]
+    },
+    {
+        id: 19,
+        title: '편의의 왕국',
+        image: 'images/situation_19.png',
+        text: `당신은 일본의 대도시에서 작은 사업을 시작하려는 사업가다. 일본 사회를 관찰하며 몇 가지 특징을 발견했다. 첫째, <span class="highlight-yellow">치안이 매우 좋아</span> 길거리에 있는 물건도 거의 도난당하지 않는다. 둘째, 사회 전반적으로 <span class="highlight-yellow">편리함과 효율성</span>을 매우 중시한다.<br><br>하지만 사업 환경은 만만치 않다. <span class="highlight-yellow">인구 밀도가 높아 가게 임대료가 비싸고</span>, <span class="highlight-yellow">인건비 또한 매우 높다.</span> 당신은 좁은 공간에서 24시간 음료를 판매하고 싶다. 이 사회경제적 환경을 고려할 때, 가장 합리적인 사업 모델은 무엇일까?`,
+        choices: [
+            { 
+                text: '24시간 운영을 위해, 직원을 2명 고용하여 교대로 가게를 지키게 한다.', 
+                isCorrect: false,
+                failureText: '사업은 한 달 만에 파산 위기에 처했다. 당신은 높은 임대료와 비싼 인건비를 감당할 수 없었다. <span class="highlight-yellow">비용 문제를 해결하지 않고서는</span> 이 나라에서 24시간 사업을 유지할 수 없다는 것을 뒤늦게 깨달았다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '치안이 좋다는 점을 믿고, 돈통만 놓아둔 무인 가판대를 설치한다.', 
+                isCorrect: false,
+                failureText: '좋은 시도였지만 사업적으로는 실패했다. 대부분의 사람들이 정직하게 돈을 냈지만, 일부는 그렇지 않았다. 무엇보다, 거스름돈을 준비하고 상품을 채우는 과정이 <span class="highlight-yellow">너무 비효율적</span>이었다. 당신의 가게는 신뢰에만 기댄 아마추어적인 가게로 남았다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '직원 없이 24시간 작동하는 자동판매기를 설치하여 음료를 판매한다.', 
+                isCorrect: true,
+                xpGained: 15,
+                successText: '탁월한 사업 전략이다. 자동판매기는 좁은 공간에서 최소한의 비용으로 24시간 내내 수익을 창출했다. 당신은 일본의 <span class="highlight-yellow">사회경제적 환경에 완벽하게 적응</span>하여 사업을 성공으로 이끌었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_19.png',
+                    text: '일본의 유명한 <span class="highlight-yellow">\'자동판매기(自動販売機)\'</span> 문화는 이러한 사회 환경의 필연적인 결과물입니다. <span class="highlight-yellow">높은 인건비와 임대료, 낮은 범죄율, 그리고 편리함을 추구하는 문화</span>가 결합하여 무인 자동화 상점이 번성할 최적의 조건을 만들었습니다. 이는 한 나라의 사회 구조와 경제 환경이 어떻게 독특한 기술 문화를 형성하는지 보여주는 대표적인 사례입니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 20,
+        title: '땅을 만드는 기술',
+        image: 'images/situation_20.png',
+        text: `당신은 17세기 네덜란드의 지도자다. 국토의 상당 부분이 <span class="highlight-yellow">해수면보다 낮은 거대한 늪지대</span>라 농사를 짓거나 살 수가 없다. 당신의 최우선 과제는 이 물을 모두 퍼내어, 사람이 살 수 있는 <span class="highlight-yellow">새롭고 마른 땅</span>을 만드는 것이다.<br><br>이를 위해서는 거대한 펌프를 쉼 없이 돌릴 동력이 필요하다. 주변을 둘러보니, 북해에서는 <span class="highlight-yellow">강력하고 끊임없는 바람</span>이 불어온다. 하지만 석탄은 아직 흔한 연료가 아니고, 땅이 평평해 수력 발전을 쓸 수도 없다. 어떤 동력을 활용하는 것이 가장 합리적일까?`,
+        choices: [
+            { 
+                text: '강력한 공동체 의식을 바탕으로, 모든 주민을 동원해 양동이로 물을 퍼낸다.', 
+                isCorrect: false,
+                failureText: '결과는 처참했다. 주민들이 밤낮없이 물을 퍼냈지만, <span class="highlight-yellow">땅속에서 스며 나오는 물의 양</span>을 따라잡을 수 없었다. 사람들은 금방 지쳐 쓰러졌고, 늪의 수위는 전혀 변하지 않았다. 당신은 문제의 규모를 과소평가했다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '수많은 말을 동원하여, 말이 끄는 힘으로 펌프를 작동시킨다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '엄청난 비용을 들여 수많은 말을 동원한 결과, 마침내 작은 땅 하나를 얻는 데는 성공했다. 하지만 이것은 지속 가능한 방법이 아니었다. <span class="highlight-yellow">말을 유지하는 데 드는 막대한 비용</span> 때문에 더 이상의 간척 사업은 불가능했다.',
+                failureText: '처음에는 효과가 있는 듯 보였다. 하지만 펌프를 계속 돌리기 위해 필요한 <span class="highlight-yellow">수많은 말을 먹일 막대한 양의 사료</span>를 감당할 수 없었다. 결국 비용 문제로 프로젝트는 중단되었고, 땅은 다시 물에 잠겼다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '커다란 날개가 달린 기계를 만들어, 끊임없이 부는 바람의 힘으로 펌프를 돌린다.', 
+                isCorrect: true,
+                successText: '혁신적인 해결책이었다. 바람의 힘으로 작동하는 펌프는 지치지 않고 밤낮으로 물을 퍼냈고, 마침내 질척이던 늪은 비옥한 농경지로 변했다. 당신은 <span class="highlight-yellow">자연의 힘을 이용해 자연을 극복</span>하는 위업을 달성했다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_20.png',
+                    text: '네덜란드의 상징인 <span class="highlight-yellow">\'풍차(Windmill)\'</span>는 바로 이러한 생존의 결과물입니다. <span class="highlight-yellow">해수면보다 낮은 땅</span>이라는 절망적인 자연환경을, <span class="highlight-yellow">끊임없이 부는 바람</span>이라는 또 다른 자연환경을 이용해 극복한 것입니다. 풍차로 물을 퍼내 만든 인공 간척지 <span class="highlight-yellow">\'폴더르(Polder)\'</span>는 "신은 세상을 창조했지만, 네덜란드인은 네덜란드를 만들었다"는 말을 낳았습니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 21,
+        title: '어둠과 추위 속에서',
+        image: 'images/situation_21.png',
+        text: `당신은 고대 핀란드의 숲속에 사는 정착민이다. 길고 혹독한 겨울이 찾아왔다. 해는 거의 뜨지 않아 세상은 <span class="highlight-yellow">끝없는 어둠</span>에 잠겨 있고, <span class="highlight-yellow">뼛속까지 파고드는 추위</span>가 오두막의 벽을 뚫고 들어온다.<br><br>이러한 어둠과 추위는 육체뿐만 아니라 정신까지 지치게 만들어 마을 전체가 고립감에 빠져있다. 당신과 공동체는 이 겨울을 이겨내기 위해, <span class="highlight-yellow">몸을 덥히고, 청결을 유지하며, 공동체의 유대감</span>을 다질 효과적인 방법이 절실히 필요하다. 어떤 해결책이 가장 현명할까?`,
+        choices: [
+            { 
+                text: '각자 자신의 오두막에서, 화롯불에 의지하며 최대한 외부 활동을 줄인다.', 
+                isCorrect: false,
+                failureText: '최악의 결과가 찾아왔다. 사람들은 추위는 겨우 견뎠지만, 기나긴 어둠 속에서 <span class="highlight-yellow">완전히 고립되어 깊은 우울감</span>에 빠졌다. 공동체 의식은 사라졌고, 마을은 활기를 잃었다. 당신은 육체의 생존만큼 정신의 생존도 중요하다는 것을 잊었다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '마을 중앙에 거대한 모닥불을 피워, 다 함께 온기를 쬐고 이야기를 나눈다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '며칠 동안은 효과가 있었다. 사람들은 오랜만에 함께 모여 활기를 되찾았다. 하지만 <span class="highlight-yellow">비효율적인 모닥불은 일주일 만에 겨울 동안 쓸 땔감의 절반</span>을 태워버렸고, 마을은 더 혹독한 추위의 위협에 직면하게 되었다.',
+                failureText: '치명적인 실수였다. 거대한 모닥불은 열기 대부분을 공기 중으로 날려버렸고, <span class="highlight-yellow">귀한 땔감만 엄청난 속도로 낭비</span>했다. 결국 땔감이 다 떨어져 마을 전체가 추위에 떨게 되었다. 당신의 계획은 너무나 비효율적이었다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '단열이 잘 된 작은 나무 방을 만들어, 적은 땔감으로 뜨겁게 달군 돌로 온도를 높여 함께 사용한다.', 
+                isCorrect: true,
+                successText: '완벽한 해결책이었다. 뜨거운 증기가 가득한 방은 뼛속까지 스민 한기를 몰아냈고, 땀을 흘리며 몸을 씻을 수도 있었다. 무엇보다 이 공간은 <span class="highlight-yellow">마을 사람들이 함께 모여 이야기하는 사랑방</span>이 되었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_21.png',
+                    text: '이것이 바로 핀란드 <span class="highlight-yellow">\'사우나(Sauna)\'</span> 문화의 기원입니다. 사우나는 단순한 목욕 시설이 아니라, 혹독한 자연환경을 이겨내기 위한 <span class="highlight-yellow">생존의 필수 요소</span>였습니다. <span class="highlight-yellow">추위와 어둠, 위생 문제, 그리고 사회적 고립감</span>이라는 복합적인 문제에 대한 가장 효율적인 해결책이 바로 사우나였고, 이는 핀란드 인들의 삶의 중심이 되었습니다.'
+                }
+            }
+        ]
+    },
+        {
+        id: 22,
+        title: '산맥 속의 나라',
+        image: 'images/situation_22.png',
+        text: `당신은 스위스 연방의 지도자다. 당신의 나라는 <span class="highlight-yellow">유럽의 강력한 국가들 사이에 둘러싸여</span> 있으며, 이웃 국가들은 언제든 전쟁을 일으킬 수 있는 잠재적 위협이다. 당신의 국토 대부분은 <span class="highlight-yellow">험준하고 거대한 알프스 산맥</span>으로 이루어져 있다.<br><br>스위스는 이웃에 비해 인구도 적고 자원도 부족하여 전면전으로는 승산이 없다. 당신의 목표는 전쟁을 이기는 것이 아니라, <span class="highlight-yellow">아무도 감히 침략할 엄두를 내지 못하게 만들어</span> 국가의 독립과 평화를 지키는 것이다. 어떤 국방 정책을 채택해야 하는가?`,
+        choices: [
+            { 
+                text: '강력한 이웃 국가 중 하나와 군사 동맹을 맺어 안보를 보장받는다.', 
+                isCorrect: false,
+                failureText: '치명적인 외교적 실수였다. 당신이 한 국가와 동맹을 맺자, 다른 경쟁 국가들이 스위스를 <span class="highlight-yellow">적대 세력으로 간주</span>하기 시작했다. 결국 스위스는 강대국들의 대리 전쟁터가 될 위기에 처했고, 평화는 더욱 멀어졌다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '이웃 국가들을 자극하지 않기 위해, 군대를 해산하고 완전한 비무장 중립을 선언한다.', 
+                isCorrect: false,
+                successChance: 0.1,
+                successText: '운 좋게도 한동안 평화가 유지되었다. 하지만 이웃 나라에서 야심 있는 독재자가 등장하자, <span class="highlight-yellow">스위스는 아무런 저항도 하지 못하고</span> 그대로 합병될 것이라는 소문이 돌기 시작했다. 당신의 나라는 바람 앞의 촛불 신세가 되었다.',
+                failureText: '끔찍한 판단이었다. 당신의 선의와는 달리, 이웃 국가는 스위스를 <span class="highlight-yellow">손쉬운 먹잇감</span>으로 여기고 침략했다. 아무런 방어 수단이 없었던 당신의 나라는 힘없이 무너졌다. 힘없는 중립은 공허한 외침일 뿐이었다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '알프스 산맥 전체를 요새로 만들고, 모든 시민이 군인이 되어 침략 시 끝까지 저항하는 전략을 세운다.', 
+                isCorrect: true,
+                successText: '가장 현명한 전략이었다. 스위스를 침략하는 비용이 얻는 이득보다 훨씬 크다는 것을 깨달은 이웃 국가들은 아무도 스위스를 넘보지 않았다. 당신은 <span class="highlight-yellow">나라의 지형적 강점을 활용하여</span> 누구도 깨뜨릴 수 없는 평화를 쟁취했다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_22.png',
+                    text: '이것이 바로 스위스의 <span class="highlight-yellow">\'무장 중립(Armed Neutrality)\'</span> 정책의 핵심입니다. 스위스는 험준한 산악 지형을 최대한 활용해 국토 전체를 <span class="highlight-yellow">거대한 요새</span>로 만들었습니다. 침략 당할 경우 모든 시민이 예비군으로서 산악 지형에서 끝까지 저항하도록 하여, <span class="highlight-yellow">침략의 대가를 감당할 수 없게 만드는 것</span>이 국방의 핵심입니다. 이는 지정학적, 지리적 환경이 국가의 생존 전략을 어떻게 결정했는지 보여주는 대표적인 사례입니다.'
+                }
+            }
+        ]
+    },  
+    {
+        id: 23,
+        title: '산의 도전',
+        image: 'images/situation_23.png',
+        text: `당신은 필리핀 북부 산악지대에 사는 '이푸가오' 부족의 일원이다. 당신의 부족은 대대로 쌀을 주식으로 삼아왔다. 하지만 주변을 둘러봐도 <span class="highlight-yellow">농사를 지을 만한 평평한 땅은 전혀 보이지 않고</span>, 오직 가파른 산비탈만이 끝없이 이어진다.<br><br>당신과 부족민들의 생존은 이 험준한 산에서 쌀을 재배하는 불가능에 가까운 도전에 달려있다. 쌀농사는 <span class="highlight-yellow">물을 가두어 둘 수 있는 평평한 땅</span>이 반드시 필요하다. 이 척박한 환경을 극복하고 쌀을 얻기 위한 가장 합리적인 방법은 무엇일까?`,
+        choices: [
+            { 
+                text: '쌀을 포기하고, 산비탈에서도 잘 자라는 다른 작물(예: 옥수수)을 찾아다닌다.', 
+                isCorrect: false,
+                successChance: 0.3,
+                successText: '당신은 굶주림은 면할 수 있었다. 하지만 쌀을 주식으로 하는 부족의 오랜 전통과 식문화를 포기한 대가로, 당신은 <span class="highlight-yellow">공동체 내에서 정체성을 잃어버린 이방인</span>이 되었다. 생존은 했지만 많은 것을 잃었다.',
+                failureText: '당신은 새로운 작물을 찾아 헤맸지만, 낯선 식물에 대한 지식 부족으로 결국 굶주림에 시달렸다. 당신은 <span class="highlight-yellow">조상 대대로 이어져 온 쌀농사 기술</span>이라는 소중한 자산을 너무 쉽게 포기했다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '산의 경사와 상관없이, 비가 올 때마다 볍씨를 뿌려 빗물에 의존한다.', 
+                isCorrect: false,
+                failureText: '결과는 처참했다. 볍씨는 <span class="highlight-yellow">가파른 경사면을 따라 모두 빗물에 휩쓸려 내려갔고</span>, 땅에는 아무것도 남지 않았다. 당신은 쌀농사의 가장 기본 원리인 \'물을 가두는 것\'의 중요성을 완전히 무시했다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '산비탈을 직접 깎아 수평의 층계를 만들고, 돌로 벽을 쌓아 물을 가둔다.', 
+                isCorrect: true,
+                successText: '엄청난 노력 끝에, 불가능해 보였던 산비탈은 물을 가득 담은 수천 개의 논으로 변했다. 당신과 부족은 <span class="highlight-yellow">자연의 한계를 인간의 의지와 노력으로 극복</span>하는 위대한 업적을 이루었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_23.png',
+                    text: '필리핀의 <span class="highlight-yellow">\'계단식 논(Rice Terraces)\'</span>은 평야가 부족한 산악지대에서 쌀을 재배하기 위한 인간 노력의 결정체입니다. 험준한 산을 깎아 층을 만들고 관개 시설을 연결한 이 거대한 구조물은, 척박한 <span class="highlight-yellow">자연환경에 순응하기보다 극복하려 했던</span> 이푸가오 부족의 독창적인 지혜와 기술력을 보여주는 문화유산입니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 24,
+        title: '도시의 점심시간',
+        image: 'images/situation_24.png',
+        text: `당신은 인도 뭄바이에서 새로운 사업을 구상 중이다. 뭄바이의 수많은 직장인들은 종교나 입맛, 비용 문제로 외식보다 <span class="highlight-yellow">가정에서 만든 따뜻한 도시락</span>을 점심으로 먹고 싶어 한다. 하지만 살인적인 <span class="highlight-yellow">뭄바이의 교통체증</span> 때문에, 개인이 매일 아침 집에서 사무실까지 도시락을 제시간에 가져오는 것은 거의 불가능하다.<br><br>당신은 이 도시 전체의 점심 식사를 책임질 거대한 시스템을 만들어야 한다. 이 복잡한 문제를 해결할 가장 효율적이고 확장 가능한 방법은 무엇일까?`,
+        choices: [
+            { 
+                text: '최신 기술을 도입, 오토바이 배달원 네트워크를 이용해 각 가정에서 사무실로 개별 배송한다.', 
+                isCorrect: false,
+                failureText: '완벽한 실패였다. 오토바이조차도 뭄바이의 교통지옥 앞에서는 속수무책이었다. 배달은 항상 늦었고, 음식은 식어버렸다. <span class="highlight-yellow">수백만 개의 개별 주문을 처리하는 비용</span>은 수익을 넘어섰고, 당신의 회사는 곧 파산했다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '도심에 대형 급식 시설을 짓고, 다양한 종류의 집밥 스타일 메뉴를 제공한다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '일부 고객들은 당신의 서비스를 이용했다. 하지만 대부분의 사람들은 "아무리 맛있어도 <span class="highlight-yellow">우리 집에서 만든 음식과는 다르다</span>"며 구독을 거절했다. 당신은 이들의 문화적 욕구를 정확히 파악하지 못했다.',
+                failureText: '사람들의 반응은 차가웠다. 그들이 원했던 것은 \'집밥 스타일\'이 아니라, <span class="highlight-yellow">진짜 \'우리 집\'에서 만든 바로 그 음식</span>이었다. 당신의 사업은 고객의 핵심적인 요구를 놓쳤기 때문에 외면받았다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '교통체증을 피해 도시의 정시성 높은 통근 열차로 도시락을 옮기고, 역에서부터는 인력으로 배달한다.', 
+                isCorrect: true,
+                successText: '그야말로 천재적인 발상이었다. 혼잡한 도로를 완벽하게 피한 당신의 배달 시스템은 매일 수십만 개의 도시락을 <span class="highlight-yellow">정확한 시간에, 뜨거운 상태로</span> 배달했다. 당신의 사업은 뭄바이 직장인들의 점심을 책임지는 도시의 혈관이 되었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_24.png',
+                    text: '뭄바이의 <span class="highlight-yellow">\'다바왈라(Dabbawala)\'</span>는 기술 없이 인간의 협업만으로 운영되는 세계 최고 수준의 물류 시스템입니다. <span class="highlight-yellow">극심한 교통체증</span>이라는 문제와 <span class="highlight-yellow">집밥을 원하는 문화적 수요</span>가 만나, 가장 효율적인 운송수단인 열차와 정교한 인적 네트워크를 활용하는 독창적인 해결책을 만들어냈습니다. 이는 복잡한 도시 환경이 낳은 인간 지혜의 놀라운 사례입니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 25,
+        title: '절벽 위의 마을',
+        image: 'images/situation_25.png',
+        text: `당신은 그리스 산토리니섬에 새로운 마을을 건설하는 건축가다. 이곳의 자연환경은 까다롭기 그지없다. 에게해의 태양은 <span class="highlight-yellow">일 년 내내 매우 뜨겁고 강렬</span>하며, 가파른 절벽 위에는 <span class="highlight-yellow">강한 바닷바람</span>이 쉴 새 없이 불어온다.<br><br>또한, 이 섬은 화산 활동으로 만들어져, 건축에 쓸 만한 <span class="highlight-yellow">커다란 나무가 거의 자라지 않는다.</span> 당신은 이 모든 조건을 고려하여 시원하고, 튼튼하며, 구하기 쉬운 재료로 지을 수 있는 집을 설계해야 한다. 어떤 설계가 가장 합리적일까?`,
+        choices: [
+            { 
+                text: '목재를 주재료로, 통풍을 위해 창문이 큰 집을 짓는다.', 
+                isCorrect: false,
+                failureText: '총체적 난국이다. 비싼 수입 목재 때문에 건축 비용은 천정부지로 치솟았다. 큰 창문은 시원한 바람이 아닌 <span class="highlight-yellow">뜨거운 햇빛을 그대로 받아들여</span> 실내를 찜통으로 만들었고, 강풍에 창문이 파손되기 일쑤였다. 당신의 설계는 이 땅과 최악의 상성을 보였다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '주변의 화산암을 이용하되, 열을 잘 흡수하도록 어두운 색으로 짓는다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '튼튼한 집을 짓는 데는 성공했다. 하지만 어두운 돌벽은 <span class="highlight-yellow">낮 동안 햇빛을 전부 흡수</span>했고, 집 안은 사람이 견디기 힘들 정도로 뜨거워졌다. 결국 주민들은 시원한 저녁이 되기 전까지 집에 들어갈 수 없었다.',
+                failureText: '끔찍한 결과였다. 어두운 색의 돌집은 낮 동안의 열을 그대로 머금어, 밤이 되어도 식지 않는 <span class="highlight-yellow">거대한 불가마</span>가 되어버렸다. 당신의 집은 사람이 살 수 없는 공간이 되었다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '화산암으로 두꺼운 벽을 쌓고 햇빛을 반사하도록 하얀색 칠을 하며, 지붕은 둥근 돔 형태로 짓는다.', 
+                isCorrect: true,
+                successText: '완벽한 설계였다. 하얀 벽은 강렬한 햇빛을 튕겨내 실내를 시원하게 유지해주었고, 둥근 돔 지붕은 <span class="highlight-yellow">거센 바닷바람의 저항을 최소화</span>하여 안정성을 높여주었다. 당신의 마을은 이 땅의 지혜 그 자체가 되었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_25.png',
+                    text: '그리스 산토리니의 건축물은 지중해의 자연환경에 최적화된 결과물입니다. <span class="highlight-yellow">하얀색 회벽</span>은 강한 햇빛을 반사하여 실내 온도를 낮추고, <span class="highlight-yellow">둥근 돔 형태의 지붕</span>은 강한 바람의 영향을 줄여줍니다. 또한, <span class="highlight-yellow">나무가 귀한 환경</span>에서 주변의 돌과 흙을 주재료로 사용한 것은 생존을 위한 합리적인 선택이었습니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 26,
+        title: '불과 얼음의 땅',
+        image: 'images/situation_26.png',
+        text: `당신은 아이슬란드에 정착한 초기 바이킹의 지도자다. 생존을 위한 가장 큰 과제는 <span class="highlight-yellow">길고 혹독한 겨울의 추위</span>를 이겨내는 것이다. 이 섬은 <span class="highlight-yellow">땔감으로 쓸 숲이 거의 없고</span>, 연료를 수입하는 것은 현실적으로 불가능하다.<br><br>하지만 당신의 발밑, 땅에서는 엄청난 에너지가 끓어오르고 있다. 섬 곳곳에서 <span class="highlight-yellow">뜨거운 증기가 뿜어져 나오고 온천수가 솟아난다.</span> 당신은 이 자연의 힘을 이용해, 공동체가 겨울을 따뜻하게 날 수 있는 지속 가능한 난방 시스템을 만들어야 한다.`,
+        choices: [
+            { 
+                text: '화산암을 채굴하여, 그 안에 섞인 석탄이나 연료가 될 만한 광물을 찾는다.', 
+                isCorrect: false,
+                failureText: '헛된 노력이었다. 귀중한 시간을 들여 땅을 파헤쳤지만 나오는 것은 평범한 돌멩이뿐이었다. <span class="highlight-yellow">눈앞에 끓어오르는 명백한 에너지원</span>을 무시하고 불확실한 가능성에 매달린 대가는 혹독한 겨울이었다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '해안가로 떠내려온 유목이나 얼마 없는 관목을 모아, 각 집의 화로에서 아껴 쓴다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '부족민들은 땔감이 다 떨어지기 전까지, 약 한 달간은 따뜻하게 지낼 수 있었다. 하지만 <span class="highlight-yellow">혹독한 겨울은 이제 막 시작</span>되었을 뿐이다. 당신의 임시방편은 더 큰 재앙을 예고하고 있다.',
+                failureText: '결국 땔감은 한 달 만에 바닥났다. 겨울이 한창일 때 난방이 끊기자, 사람들은 추위와 질병에 시달리기 시작했다. <span class="highlight-yellow">부족한 자원에만 의존</span>한 당신의 계획은 공동체를 위기에 빠뜨렸다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '땅에서 솟는 온천수와 증기를 단열된 파이프로 연결해, 각 가정에 직접 공급한다.', 
+                isCorrect: true,
+                successText: '그야말로 최고의 해결책이었다. 땅의 열기는 파이프를 통해 각 가정으로 전달되어, <span class="highlight-yellow">땔감 하나 없이도 마을 전체를 따뜻하게</span> 만들었다. 당신은 자연의 선물을 슬기롭게 이용하여 혹한의 저주를 축복으로 바꾸었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_26.png',
+                    text: '아이슬란드는 <span class="highlight-yellow">지열 에너지</span>를 활용하여 척박한 자연환경을 극복한 나라입니다. <span class="highlight-yellow">화산 활동으로 얻는 막대한 지열</span>을 이용한 중앙난방 시스템은, 숲이 거의 없는 아이슬란드인들이 춥고 긴 겨울을 이겨낼 수 있었던 핵심적인 생존 기술이었습니다. 이는 불리한 자연환경 속에서 대안적인 자원을 찾아낸 인간의 지혜를 보여줍니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 27,
+        title: '물의 골목길',
+        image: 'images/situation_27.png',
+        text: `당신은 '물의 도시' 이탈리아 베네치아의 상인이다. 이 도시의 '도로'는 아스팔트가 아닌 <span class="highlight-yellow">거미줄처럼 얽힌 수로(운하)</span>이며, 시민들의 주요 교통수단은 당연히 배다.<br><br>하지만 도시의 많은 수로는 폭이 매우 <span class="highlight-yellow">좁고 구불구불하며, 수심 또한 얕다.</span> 당신은 이 독특하고 복잡한 도시의 어느 곳이든 자유롭게 오가며 사람과 물건을 실어 나를 수 있는 배가 필요하다. 어떤 배를 선택해야 할까?`,
+        choices: [
+            { 
+                text: '안정성을 위해 바닥이 깊은 작은 돛단배를 이용한다.', 
+                isCorrect: false,
+                failureText: '출항하자마자 문제가 발생했다. 배의 깊은 바닥은 <span class="highlight-yellow">얕은 수로의 바닥에 걸려</span> 옴짝달싹 못 하게 되었다. 설상가상으로, 돛대는 낮은 다리들에 계속 부딪혀 결국 부러지고 말았다. 이 배는 이 도시와는 최악의 궁합이다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '힘들게 노를 젓지 않도록, 프로펠러가 달린 작은 모터보트를 이용한다.', 
+                isCorrect: false,
+                successChance: 0.3,
+                successText: '넓은 중앙 운하에서는 모터보트가 빠르고 편리했다. 하지만 목적지로 가기 위해 좁은 수로로 들어서자, 모터와 배터리가 필요한 모터보트는<span class="highlight-yellow">배의 폭이 너무 넓어</span> 더 이상 나아갈 수 없었다. 당신은 결국 목적지까지 걸어가야만 했다.',
+                failureText: '당신의 모터보트는 도시의 골칫거리가 되었다. 프로펠러는 <span class="highlight-yellow">얕은 수로 바닥의 진흙</span>에 계속 걸렸고, 배가 만들어내는 물결은 오래된 건물들의 토대를 손상시켰다. 주민들의 항의에 당신은 운행을 포기해야 했다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '바닥이 평평하고, 폭이 좁고 긴 모양의 배를 긴 노 하나로 저어 나아간다.', 
+                isCorrect: true,
+                successText: '완벽한 선택이었다. 평평한 바닥은 얕은 수로를 막힘없이 나아갔고, 길고 날렵한 선체는 <span class="highlight-yellow">좁은 골목길 같은 운하</span>를 자유자재로 통과했다. 당신은 베네치아의 혈관을 누비는 최고의 운송수단을 손에 넣었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_27.png',
+                    text: '베네치아의 <span class="highlight-yellow">\'곤돌라(Gondola)\'</span>는 도시의 독특한 지리 환경이 만들어낸 발명품입니다. <span class="highlight-yellow">얕은 수심</span>을 다니기 위한 평평한 바닥과, <span class="highlight-yellow">좁고 구불구불한 수로</span>를 통과하기 위한 길고 날렵한 선체는 수백 년에 걸쳐 이 도시에 가장 최적화된 형태로 발전했습니다. 곤돌라는 단순한 관광 상품이 아닌, 베네치아의 지형에 완벽하게 적응한 교통수단입니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 28,
+        title: '대초원의 개척자',
+        image: 'images/situation_28.png',
+        text: `당신은 19세기 미국 중부 대평원에 정착한 개척자다. 혹독한 겨울이 오기 전에 가족이 살 집을 지어야만 한다. 하지만 주위를 둘러봐도 보이는 것은 끝없는 풀밭뿐, <span class="highlight-yellow">집을 지을 나무나 돌을 전혀 찾을 수가 없다.</span><br><br>당신이 가진 유일한 자원은 발밑에 있는, <span class="highlight-yellow">풀뿌리가 빽빽하게 얽혀있는 두껍고 단단한 흙</span>뿐이다. 이 독특한 환경에서, 당신은 어떤 방법으로 비바람과 추위를 막을 집을 지어야 할까?`,
+        choices: [
+            { 
+                text: '수백 킬로미터 떨어진 동부의 도시까지 가서 비싼 값에 목재를 사서 운반해온다.', 
+                isCorrect: false,
+                failureText: '현실을 무시한 계획이었다. 목재를 운반해 오는 데 모든 돈과 시간을 허비한 당신은, 결국 <span class="highlight-yellow">겨울이 오기 전까지 집을 완성하지 못했다.</span> 첫눈이 내리는 날, 당신의 가족은 아무런 보금자리 없이 추위에 떨어야 했다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '강둑이나 언덕의 측면을 파고 들어가, 최소한의 비바람만 막을 수 있는 동굴집을 만든다.', 
+                isCorrect: false,
+                successChance: 0.4,
+                successText: '당신은 최악의 추위는 피할 수 있었다. 하지만 <span class="highlight-yellow">어둡고 축축한 흙 동굴</span>은 비가 올 때마다 진흙이 떨어졌고, 뱀과 벌레의 위협에 시달려야 했다. 이것은 임시 대피소일 뿐, 가족이 살 수 있는 집은 아니었다.',
+                failureText: '비가 내리자 재앙이 닥쳤다. 당신의 동굴집은 <span class="highlight-yellow">맥없이 무너져 내렸고</span>, 당신과 가족은 흙더미 속에서 간신히 빠져나와야 했다. 당신은 땅을 너무 얕게 파서 안정성을 확보하지 못했다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '풀뿌리가 엉킨 흙을 벽돌처럼 잘라내어, 차곡차곡 쌓아 올려 벽을 만든다.', 
+                isCorrect: true,
+                successText: '그야말로 최고의 아이디어였다. 두꺼운 흙벽돌은 여름의 더위와 겨울의 추위를 완벽하게 막아주는 <span class="highlight-yellow">훌륭한 단열재</span> 역할을 했다. 당신은 <span class="highlight-yellow">주변의 유일한 자원을 활용</span>하여 튼튼하고 아늑한 보금자리를 만드는 데 성공했다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_28.png',
+                    text: '미국 대평원의 <span class="highlight-yellow">\'소드 하우스(Sod House)\'</span>는 척박한 환경에 대한 인간 적응의 상징입니다. 건축용 <span class="highlight-yellow">나무와 돌이 절대적으로 부족했던 대초원</span>에서, 개척자들은 유일한 자원인 <span class="highlight-yellow">풀뿌리가 얽힌 흙</span>을 벽돌로 사용했습니다. 이 흙집은 단열 효과가 뛰어나고 심지어 초원의 불에도 강해, 척박한 환경 속 생존을 가능하게 한 지혜의 산물이었습니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 29,
+        title: '따뜻한 바닥의 비밀',
+        image: 'images/situation_29.png',
+        text: `당신은 조선시대의 건축가다. 한국의 겨울은 <span class="highlight-yellow">춥고 건조하며, 특히 바닥에서부터 한기가 올라온다.</span> 당신은 이 추위를 가장 효율적으로 막을 수 있는 난방 방식을 설계해야 한다. 당시의 기술로는 방 전체의 공기를 데우는 것은 매우 비효율적이다.<br><br>당신은 아궁이의 열기를 바닥 밑으로 통과시켜 <span class="highlight-yellow">방바닥 전체를 데우는 '온돌'</span> 시스템을 완성했다. 이제 이 따뜻한 바닥의 효율을 극대화할 수 있는 실내 생활 방식을 정해야 한다. 어떤 방식을 채택하는 것이 가장 합리적일까?`,
+        choices: [
+            { 
+                text: '바닥의 온기를 등지고 서서 생활하며, 잠은 침대 위에서 잔다.', 
+                isCorrect: false,
+                failureText: '비효율적인 방식이다. 따뜻한 공기는 위로 올라가기 때문에, 서서 생활하는 것은 <span class="highlight-yellow">온돌의 열기를 거의 느끼지 못하는</span> 결과를 낳았다. 또한, 바닥에서 떨어진 침대는 온돌의 장점을 전혀 활용하지 못했다. 당신은 스스로 만든 발명품을 제대로 이해하지 못했다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '차가운 벽에 의자를 붙여 앉고, 잠은 해먹을 설치하여 잔다.', 
+                isCorrect: false,
+                failureText: '최악의 설계였다. 따뜻한 바닥의 열기는 당신이 앉은 의자까지 닿지 않았고, 공중에 매달린 해먹은 <span class="highlight-yellow">가장 차가운 공기 속에서 잠을 자는</span> 끔찍한 결과를 만들었다. 당신의 생활 방식은 온돌과 정반대로 움직였다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '바닥에 방석을 깔고 앉아 생활하고, 잠은 바닥에 이불을 깔고 잔다.', 
+                isCorrect: true,
+                successText: '완벽한 조화였다. 바닥에 직접 앉고 누워 생활하자, 당신은 <span class="highlight-yellow">온돌의 따뜻한 열기를 몸 전체로 직접 느낄 수 있었다.</span> 당신의 난방 시스템과 생활 방식은 최고의 효율을 보여주었고, 이는 한국인의 삶의 일부가 되었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_29.png',
+                    text: '한국의 <span class="highlight-yellow">\'온돌(Ondol)\'</span>은 바닥을 데워 난방하는 독특한 시스템으로, 이는 자연스럽게 <span class="highlight-yellow">\'좌식 생활\'</span> 문화로 이어졌습니다. 바닥에서 올라오는 열을 가장 효율적으로 느끼기 위해 의자나 침대 대신 바닥에 직접 앉고 눕는 생활 방식이 발달한 것입니다. 이는 난방 기술이라는 인문환경이 한 민족의 고유한 생활 양식을 어떻게 결정했는지 보여주는 대표적인 사례입니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 30,
+        title: '왕국의 철학',
+        image: 'images/situation_30.png',
+        text: `당신은 히말라야의 작은 왕국, 부탄의 정책 결정자다. 이 나라의 국민들은 깊은 불교 신자이며, 국정 운영의 가장 중요한 목표는 <span class="highlight-yellow">모든 살아있는 것들에 대한 자비심</span>을 실현하고, 국민들이 <span class="highlight-yellow">물질적 탐욕에서 벗어나 내면의 평화</span>를 얻도록 돕는 것이다.<br><br>당신에게 외국 자본이 들어오는 거대한 국가 개발 프로젝트 세 가지가 제안되었다. 당신은 부탄의 이러한 종교적, 문화적 가치관에 따라 가장 올바른 결정을 내려야 한다.`,
+        choices: [
+            { 
+                text: '최첨단 반도체 공장을 유치하여, 막대한 부와 일자리를 창출한다.', 
+                isCorrect: false,
+                failureText: '재앙적인 결정이었다. 공장은 부를 가져왔지만, 동시에 <span class="highlight-yellow">강을 오염시켜 수많은 생명을 해쳤다.</span> 국민들은 돈을 얻었지만 마음의 평화를 잃었다. 당신은 자비심이라는 국가의 근본 가치를 짓밟았다.<br> ❤️ -7',
+                failureDamage: 7
+            },
+            { 
+                text: '산 전체를 깎아 거대한 스키 리조트를 건설하고, 대규모 관광객을 유치한다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '리조트는 큰 성공을 거둬 많은 수익을 올렸다. 하지만 국민들은 당신이 불교적 행복보다 돈을 탐낸다고 생각하게 되었다. 당신은 수익금을 환경 보존 사업에 투자하겠다고 말하며 민심을 잠재웠지만, 국민의 불신은 여전히 남아 있다.',
+                failureText: '리조트는 건설 과정에서 수천 그루의 나무를 베어냈고, <span class="highlight-yellow">소란스러운 유흥 문화</span>는 마을의 평화를 깨뜨렸다. 당신은 단기적인 이익을 위해 자연과의 조화라는 소중한 가치를 훼손했다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '자연을 훼손하지 않는 소규모 생태 관광을 육성하고, 수익은 지역 복지로 분배한다.', 
+                isCorrect: true,
+                successText: '가장 현명한 길이었다. 이 프로젝트는 부탄의 <span class="highlight-yellow">아름다운 자연과 평화로운 문화를 지키면서도</span>, 공동체에 지속 가능한 수입을 안겨주었다. 당신의 결정은 불교의 가르침과 완벽한 조화를 이루었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_30.png',
+                    text: '부탄에서는 불교적 가치관을 국가 정책으로 체계화한 <span class="highlight-yellow">\'국민총행복(GNH)\'</span>이라는 개념을 사용합니다. GNH는 무분별한 개발보다는 <span class="highlight-yellow">환경 보호, 문화 보존, 공동체의 행복</span>과 같은 가치가 조화를 이루는 지속 가능한 발전을 추구합니다. 이는 한 국가의 종교적 신념이 국가의 발전 방향을 결정하는 독특한 사례입니다.'
+                }
+            }
+        ]
+    },
 ];
