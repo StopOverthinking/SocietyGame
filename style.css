@@ -68,14 +68,19 @@ button:hover {
     background-color: #018786;
 }
 
-/* --- 직감 특성 버튼 스타일 --- */
-#intuition-button {
-    margin-top: 15px;
-    background-color: #3700b3; /* 보라색 계열로 구분 */
+/* --- 특성 활성화 버튼 공통 스타일 --- */
+.perk-action-button {
+    margin-top: 8px;
+    background-color: #3700b3; /* 보라색 계열로 통일 */
     color: #e0e0e0;
 }
 
-#intuition-button:disabled {
+/* 첫 번째 특성 버튼은 선택지와의 간격을 위해 위쪽 여백을 더 줍니다. */
+#choices-container + .perk-action-button {
+    margin-top: 15px;
+}
+
+.perk-action-button:disabled {
     background-color: #555;
     cursor: not-allowed;
 }
@@ -99,11 +104,6 @@ button:hover {
     justify-content: space-around;
 }
 
-#parts-bar {
-    margin-top: 8px;
-    word-break: keep-all;
-}
-
 /* --- 보유 특성 목록 스타일 --- */
 #perk-list {
     background-color: #333;
@@ -115,6 +115,67 @@ button:hover {
 }
 
 #perk-list li {
+    margin-bottom: 8px;
+}
+
+/* --- 부품 표시 UI 스타일 --- */
+#parts-display-container {
+    margin-top: 8px;
+}
+
+#parts-toggle-button {
+    width: 100%;
+    background-color: #4a4a4a;
+    color: #e0e0e0;
+    font-size: 14px;
+    padding: 8px;
+}
+
+#parts-slots-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 0 0 8px 8px;
+    margin-top: -1px; /* 버튼과 자연스럽게 연결 */
+}
+
+.part-slot {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    background-color: #2c2c2c;
+    border: 2px dashed #555;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+}
+
+.part-slot.acquired {
+    border-style: solid;
+    border-color: #03dac6;
+    background-color: #1a2b28;
+}
+
+.part-slot .part-image {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+}
+
+.part-slot .part-name {
+    font-size: 10px;
+    margin-top: 4px;
+    color: #e0e0e0;
+    font-weight: normal;
+}
+
+#perk-list-container {
     margin-bottom: 8px;
 }
 

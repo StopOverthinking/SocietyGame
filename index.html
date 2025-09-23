@@ -24,9 +24,11 @@
                 <span>❤️ HP: <span id="hp-stat"></span></span>
                 <span>✨ XP: <span id="xp-stat"></span></span>
             </div>
-            <div id="parts-bar">
-                부품: <span id="parts-stat">없음</span>
+            <div id="parts-display-container">
+                <button id="parts-toggle-button">획득 부품 보기 (0/5)</button>
+                <div id="parts-slots-wrapper" class="hidden"></div>
             </div>
+
             <div id="perk-list-container">
                 <button id="perk-toggle-button">보유 특성 보기</button>
                 <ul id="perk-list" class="hidden">
@@ -41,7 +43,8 @@
                 <!-- 선택지 버튼이 동적으로 추가될 영역 -->
             </div>
             <!-- 직감 특성 버튼 (신규) -->
-            <button id="intuition-button" class="hidden"></button>
+            <button id="intuition-button" class="hidden perk-action-button"></button>
+            <button id="confidence-button" class="hidden perk-action-button"></button>
         </div>
 
         <!-- 3. 선택 결과 및 주사위 굴림 결과 표시 화면 -->
@@ -89,12 +92,13 @@
         <!-- 8. 개발자용 디버그 패널 (신규) -->
         <div id="debug-panel" class="hidden">
             <h3>- Debug Panel -</h3>
-            <p style="font-size: 12px; color: #aaa; margin-bottom: 10px;">(Ctrl + Shift + D 로 열기/닫기)</p>
+            <p style="font-size: 12px; color: #aaa; margin-bottom: 10px;">(Ctrl + Shift + E 로 열기/닫기)</p>
             <div class="debug-section">
                 <h4>Player Stats</h4>
                 <label>HP: <input type="number" id="debug-hp"> / <input type="number" id="debug-max-hp"></label>
                 <label>XP: <input type="number" id="debug-xp"> / <input type="number" id="debug-xp-to-level-up"></label>
                 <label>Intuition Charges: <input type="number" id="debug-intuition-charges"></label>
+                <label>Confidence Charges: <input type="number" id="debug-confidence-charges"></label>
                 <button id="debug-apply-stats">Apply Stats</button>
             </div>
             <div class="debug-section">
@@ -112,6 +116,8 @@
     </div>
 
     <script src="situations.js"></script>
+    <script src="keywords.js"></script>
+    <script src="review.js"></script>
     <script src="game.js"></script>
 </body>
 </html>
