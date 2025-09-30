@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         restartButtons: [$('restart-button-gameover'), $('restart-button-win')],
         hpStat: $('hp-stat'),
         xpStat: $('xp-stat'),
+        streakCounter: $('streak-counter'), // 연속 정답 카운터 UI 요소 추가
         situation: {
             image: $('situation-image'),
             title: $('situation-title'),
@@ -74,12 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: '생명 유지 장치', name: '생명 유지 장치', image: 'images/part_life_support.png' }
     ];
     const PARTS_TO_COLLECT = PARTS_DATA.map(p => p.id);
-    const INTRO_COMIC_CUTS = ['images/intro_1.png', 'images/intro_2.png', 'images/intro_3.png'];
+    const INTRO_COMIC_CUTS = ['images/intro_1.png', 'images/intro_2.png', 'images/intro_3.png', 'images/intro_4.png', 'images/intro_5.png', 'images/intro_6.png'];
     const TYPEWRITER_SPEED = 25; // 1초에 40글자 (1000ms / 40 = 25ms)
     
     const PERKS = [
         { id: 'fast_learner', name: '📖 빠른 학습', type: 'stackable', baseValue: 0.3, description: '경험치 획득량이 <span class="highlight-yellow">{value}%</span> 증가합니다.' },
-        { id: 'lucky', name: '🎲 구사일생', type: 'stackable', baseValue: 0.2, description: '오답 선택 시, 성공 확률이 <span class="highlight-yellow">{value}%p</span> 증가합니다.' },
+        { id: 'lucky', name: '🎲 구사일생', type: 'stackable', baseValue: 0.3, description: '오답 선택 시, 성공 확률이 <span class="highlight-yellow">{value}%p</span> 증가합니다.' },
         { id: 'scavenger', name: '⚒️ 탐색 전문가', type: 'stackable', baseValue: 0.15, description: '부품 탐색 성공 확률이 <span class="highlight-yellow">{value}%p</span> 증가합니다.' },
         { id: 'indomitable_will', name: '✊ 굳건한 의지', type: 'unique', description: '게임 오버에 달하는 피해를 입을 경우, 해당 피해를 <span class="highlight-yellow">1회</span> 무효화하고 그만큼 체력을 회복합니다.' },
         { id: 'natural_healing', name: '🌿 자연치유', type: 'unique', description: '상황이 지날 때마다 체력을 <span class="highlight-yellow">1</span> 회복합니다.' },
@@ -96,6 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'meditation', name: '🧘 명상', type: 'unique', description: '문제를 3회 연속으로 맞히면 체력을 <span class="highlight-yellow">5</span> 회복합니다.' },
         { id: 'complete_redesign', name: '🏗️ 완전 재설계', type: 'instant', description: '가지고 있는 모든 특성과 부품을 삭제하고, 레벨업 필요 경험치를 10으로 초기화합니다. 특성 1개당 15, 부품 1개당 60의 경험치를 획득합니다.' },
         { id: 'steady_learning', name: '🖊️ 꾸준한 학습', type: 'stackable', baseValue: 0.02, description: '3회 연속 정답마다 부품 탐색 성공 확률이 중첩 당 <span class="highlight-yellow">2%p</span>씩 영구적으로 증가합니다.' },
+        { id: 'part_trader', name: '⚙️ 부품 거래상', type: 'unique', description: '레벨업 시, 체력 10을 소모하고 우주선 부품 1개를 확정적으로 획득하는 선택지가 나타납니다. (체력 10 초과, 남은 부품이 있을 시)' },
+        { id: 'improvised_parts', name: '🔩 급조 부품', type: 'unique', description: '즉시 무작위 부품 2개를 획득합니다. 하지만, 피해를 입으면 이 특성으로 얻은 부품을 모두 잃습니다.' },
+        { id: 'vitality', name: '💪 활력', type: 'stackable', baseValue: 3, description: '최대 체력이 <span class="highlight-yellow">{value}</span> 증가합니다.' },
+        { id: 'dimensional_detector_a', name: '🛰️ 차원 탐지기 A', type: 'unique', description: '차원 탐지기 B와 함께 보유 시, 부품 탐색 성공 확률이 <span class="highlight-yellow">50%p</span> 증가합니다.' },
+        { id: 'dimensional_detector_b', name: '🛰️ 차원 탐지기 B', type: 'unique', description: '차원 탐지기 A와 함께 보유 시, 부품 탐색 성공 확률이 <span class="highlight-yellow">50%p</span> 증가합니다.' },
+        { id: 'fruit_of_patience', name: '🌱 인내의 결실', type: 'stackable', baseValue: { xpIncrease: 0.4, partChance: 0.25 }, description: '레벨업 시 요구 경험치 증가량이 중첩 당 <span class="highlight-yellow">40%p</span> 늘어나지만, 부품 탐색 성공 확률이 <span class="highlight-yellow">25%p</span> 증가합니다.' },
     ];
 
     // --- 3. 게임 상태 (변수) ---
@@ -117,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             xpToLevelUp: 10,
             parts: [],
             perks: {}, // { perkId: stackCount }
+            removedPerks: {}, // 제거된 특성 추적 { perkId: true }
             answeredSituations: [], // 정답을 맞힌 문제 ID 목록
             intuitionCharges: 0, // '직감' 특성 사용 횟수
             confidenceCharges: 0, // '확신' 특성 사용 횟수
@@ -124,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             correctStreak: 0, // '연쇄 성공' 특성을 위한 연속 정답 횟수
             chainSuccessUsed: false, // '연쇄 성공' 특성 사용 여부
             steadyLearningBonus: 0, // '꾸준한 학습'으로 얻은 영구 보너스
+            improvisedParts: [], // '급조 부품'으로 얻은 부품 목록
         };
         introCutIndex = 0;
         infoToShow = null;
@@ -136,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showIntroCut();
         updatePartsUI();
         updateStatsUI();
+        updateStreakUI(); // 초기화 시 연속 정답 UI도 업데이트
         showScreen('intro');
     }
 
@@ -268,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (choice.isCorrect) {
             player.correctStreak++; // 정답 스트릭 증가
-
+            updateStreakUI(); // 정답 시 스트릭 UI 즉시 업데이트
             const baseXP = choice.successXp || 5;
             const actualXpGained = calculateXpGained(baseXP);
             let successMessage = choice.successText || `올바른 선택입니다! 무사히 통과했습니다.<br>✨ +{xpGained}`;
@@ -318,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ui.nextButton.classList.remove('hidden');
         } else {
             player.correctStreak = 0; // 오답 시 스트릭 초기화
-
+            updateStreakUI(); // 오답 시 스트릭 UI 즉시 업데이트
             if (choice.successChance !== undefined) {
                 await rollDice(choice);
             } else {
@@ -338,14 +348,45 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.nextButton.classList.add('hidden');
 
         if (isCorrect) {
+            player.correctStreak++; // 정답 스트릭 증가
             const xp = 5; // 복습 문제 정답 시 고정 경험치
             gainXp(xp);
             await displayText(ui.result.text, `정답입니다! 정확하게 기억하고 있군요.<br>✨ +${calculateXpGained(xp)}`);
+
+            // '연쇄 성공' 특성 처리
+            if (player.perks['chain_success'] && !player.chainSuccessUsed && player.correctStreak >= 5) {
+                const availableParts = PARTS_TO_COLLECT.filter(part => !player.parts.includes(part));
+                if (availableParts.length > 0) {
+                    const foundPart = availableParts[Math.floor(Math.random() * availableParts.length)];
+                    acquirePart(foundPart, true);
+                    setTimeout(() => showToast(`[연쇄 성공] 발동! 5연속 정답으로 [${foundPart}] 부품을 획득합니다!`, 3500), 1000);
+                }
+            }
+
+            // '명상' 특성 처리
+            if (player.perks['meditation'] && player.correctStreak > 0 && player.correctStreak % 3 === 0) {
+                if (!player.perks['desperate_dash']) {
+                    player.hp = Math.min(player.maxHp, player.hp + 5);
+                    setTimeout(() => showToast(`[명상] 발동! 3연속 정답으로 체력을 5 회복합니다!`, 2500), 1000);
+                } else {
+                    setTimeout(() => showToast(`[명상] 효과가 발동했지만, [목숨을 건 질주]로 인해 체력이 회복되지 않습니다.`, 3000), 1000);
+                }
+            }
+
+            // '꾸준한 학습' 특성 처리
+            if (player.perks['steady_learning'] && player.correctStreak > 0 && player.correctStreak % 3 === 0) {
+                const stacks = player.perks['steady_learning'];
+                const bonusPerStack = PERKS.find(p => p.id === 'steady_learning').baseValue;
+                const bonusGained = stacks * bonusPerStack;
+                player.steadyLearningBonus += bonusGained;
+                setTimeout(() => showToast(`[꾸준한 학습] 발동! 부품 탐색 확률이 영구적으로 ${Math.round(bonusGained * 100)}%p 증가합니다!`, 3000), 1100);
+            }
         } else {
             const damage = 5; // 복습 문제 오답 시 고정 피해
             await processDamage(damage, `오답입니다. 정답을 다시 확인해 보세요.<br> ❤️ -${damage}`);
+            player.correctStreak = 0; // 오답 시에만 스트릭 초기화
         }
-        player.correctStreak = 0; // 복습 문제 후에는 연속 정답 횟수를 초기화합니다.
+        updateStreakUI(); // 정답/오답 처리 후 스트릭 UI 즉시 업데이트
         updateStatsUI();
         ui.nextButton.classList.remove('hidden');
     }
@@ -385,6 +426,22 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {string} failureMessage - 피해를 입었을 때 표시할 기본 메시지
      */
     async function processDamage(damage, failureMessage) {
+        // '급조 부품' 처리: 피해를 입기 전에 부품을 잃음
+        if (damage > 0 && player.perks['improvised_parts'] && player.improvisedParts.length > 0) {
+            const lostParts = [...player.improvisedParts];
+            // 잃어버린 부품을 player.parts에서 제거
+            player.parts = player.parts.filter(p => !lostParts.includes(p));
+            player.improvisedParts = []; // 급조 부품 목록 초기화
+            player.removedPerks['improvised_parts'] = true; // 제거된 특성으로 표시
+            delete player.perks['improvised_parts'];
+
+            showToast(`피해를 입어 [급조 부품] 특성을 잃고, 획득했던 부품(${lostParts.join(', ')})을 모두 잃었습니다!`, 4000);
+            
+            // UI 즉시 업데이트
+            updatePartsUI();
+            updatePerkListUI();
+        }
+
         player.hp -= damage;
         await displayText(ui.result.text, failureMessage);
     }
@@ -395,7 +452,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!player.perks['desperate_dash']) {
             player.hp = Math.min(player.maxHp, player.hp + healAmount);
         }
-        delete player.perks['indomitable_will']; // 특성 1회 사용 후 제거
+        player.removedPerks['indomitable_will'] = true; // 제거된 특성으로 표시
+        delete player.perks['indomitable_will'];
         
         const message = `죽음의 문턱에서 <span class="highlight-yellow">[굳건한 의지]</span>가 발동했습니다! 피해를 무효화하고 체력을 ${healAmount} 회복합니다!`;
         
@@ -409,8 +467,12 @@ document.addEventListener('DOMContentLoaded', () => {
         player.xp += calculateXpGained(amount);
         // 한 번에 여러 번 레벨업이 가능하도록 while 루프 사용
         while (player.xp >= player.xpToLevelUp) {
+            const patienceStacks = player.perks['fruit_of_patience'] || 0;
+            const patienceXpIncrease = patienceStacks > 0 ? PERKS.find(p => p.id === 'fruit_of_patience').baseValue.xpIncrease * patienceStacks : 0;
+            const xpMultiplier = 1.1 + patienceXpIncrease; // 기본 10% + 인내의 결실 보너스
+
             player.xp -= player.xpToLevelUp;
-            player.xpToLevelUp = Math.floor(player.xpToLevelUp * 1.1);
+            player.xpToLevelUp = Math.floor(player.xpToLevelUp * xpMultiplier);
             player.pendingLevelUps++; // 레벨업 횟수 증가
         }
         updateStatsUI();
@@ -420,6 +482,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function showPerkSelection() {
         showScreen('perk');
         ui.perk.choicesContainer.innerHTML = '';
+
+        // '부품 거래상' 특성 처리: 다른 선택지보다 먼저 표시
+        if (player.perks['part_trader'] && player.hp > 10 && player.parts.length < PARTS_TO_COLLECT.length) {
+            const tradeButton = document.createElement('button');
+            tradeButton.innerHTML = `[부품 거래] 체력 10 소모, 부품 1개 확정 획득`;
+            tradeButton.onclick = () => {
+                player.hp -= 10;
+                const availableParts = PARTS_TO_COLLECT.filter(part => !player.parts.includes(part));
+                const foundPart = availableParts[Math.floor(Math.random() * availableParts.length)];
+                acquirePart(foundPart);
+                showToast(`[부품 거래상] 효과 발동! 체력 10을 소모하고 [${foundPart}] 부품을 획득합니다!`, 3000);
+                updateStatsUI();
+                // 보상 선택 후 다음 단계로 진행
+                setTimeout(proceedAfterInfo, 500);
+            };
+            ui.perk.choicesContainer.appendChild(tradeButton);
+        }
 
         const { partDiscoveryChance } = getCalculatedPlayerStats();
         const partButton = document.createElement('button');
@@ -448,11 +527,15 @@ document.addEventListener('DOMContentLoaded', () => {
             let description = perk.description;
 
             if (description.includes('{value}')) {
-                let value = perk.baseValue;
+                let value;
                 // 퍼센트 단위로 표시해야 하는 특성들
                 if (['fast_learner', 'lucky', 'scavenger'].includes(perk.id)) {
-                    value = Math.round(value * 100);
+                    value = Math.round(perk.baseValue * 100);
+                } else {
+                    value = perk.baseValue;
                 }
+                // '인내의 결실'은 {value}를 사용하지 않으므로 이 로직을 타지 않음
+
                 description = description.replace('{value}', value);
             }
             button.innerHTML = `[특성 획득] ${perk.name}: ${description}`;
@@ -600,6 +683,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     player.confidenceCharges += perk.baseValue;
                     showToast(`[${perk.name}] 특성을 획득! 경험치 2배 능력을 ${perk.baseValue}회 얻습니다.`, 2500);
                 }
+                if (perk.id === 'vitality') {
+                    const hpGain = perk.baseValue;
+                    // 최대 체력과 현재 체력을 함께 올려줌
+                    player.maxHp += hpGain;
+                    player.hp += hpGain;
+                    showToast(`최대 체력과 현재 체력이 ${hpGain} 증가했습니다!`, 2500);
+                }
+                if (perk.id === 'improvised_parts') {
+                    // 즉시 부품 2개 획득 로직
+                    const partsToGain = 2;
+                    const availableParts = PARTS_TO_COLLECT.filter(part => !player.parts.includes(part));
+                    const shuffledAvailable = availableParts.sort(() => 0.5 - Math.random());
+                    
+                    for (let i = 0; i < partsToGain && i < shuffledAvailable.length; i++) {
+                        const foundPart = shuffledAvailable[i];
+                        player.parts.push(foundPart);
+                        player.improvisedParts.push(foundPart); // 급조 부품 목록에 추가
+                        setTimeout(() => showToast(`[급조 부품] 효과로 [${foundPart}] 부품을 획득!`, 2500 + i * 500), 500 + i * 500);
+                        updatePartsUI(); // 부품 획득 시 즉시 UI 업데이트
+                    }
+                    if (shuffledAvailable.length < partsToGain) {
+                         setTimeout(() => showToast(`획득할 수 있는 부품이 부족하여 ${shuffledAvailable.length}개만 획득했습니다.`, 3000), 1500);
+                    }
+                }
             }
 
             // '행운의 발견' 특성 처리
@@ -654,6 +761,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // '유리 대포'의 경험치 배율
         const glassCannonXpMultiplier = perks.glass_cannon ? 2 : 1;
 
+        // '활력' 특성에 의한 최대 체력 증가
+        const vitalityHpBonus = (perks.vitality || 0) * PERKS.find(p => p.id === 'vitality').baseValue;
+
         const stats = {
             damageReduction: 0, // 이 게임에서는 피해 감소 특성이 없음
             damageMultiplier: perks.glass_cannon ? 1.5 : 1,
@@ -661,7 +771,12 @@ document.addEventListener('DOMContentLoaded', () => {
             fastLearnerAdditiveBonus: fastLearnerAdditiveBonus,
             glassCannonXpMultiplier: glassCannonXpMultiplier,
             successChanceBonus: (perks.lucky || 0) * PERKS.find(p => p.id === 'lucky').baseValue,
-            partDiscoveryChance: 0.1 + ((perks.scavenger || 0) * PERKS.find(p => p.id === 'scavenger').baseValue) + (player.steadyLearningBonus || 0)
+            partDiscoveryChance: 0.1 +
+                                 ((perks.scavenger || 0) * PERKS.find(p => p.id === 'scavenger').baseValue) +
+                                 (player.steadyLearningBonus || 0) +
+                                 (perks.dimensional_detector_a && perks.dimensional_detector_b ? 0.5 : 0) + // 차원 탐지기 세트 효과
+                                 ((perks.fruit_of_patience || 0) * PERKS.find(p => p.id === 'fruit_of_patience').baseValue.partChance) // 인내의 결실 효과
+            // maxHpBonus: vitalityHpBonus // maxHp는 직접 player 객체에서 관리되므로 여기서는 반환하지 않음
         };
 
         // '목숨을 건 질주' 효과: 부품 획득 확률 2배
@@ -675,17 +790,20 @@ document.addEventListener('DOMContentLoaded', () => {
     /** 보유 특성 목록 UI를 업데이트합니다. */
     function updatePerkListUI() {
         ui.perk.list.innerHTML = '';
-        if (Object.keys(player.perks).length === 0) {
+        const allPerkIds = new Set([...Object.keys(player.perks), ...Object.keys(player.removedPerks)]);
+
+        if (allPerkIds.size === 0) {
             if (player.steadyLearningBonus > 0) {
                 const li = document.createElement('li');
                 li.innerHTML = `<strong>[꾸준한 학습 효과]</strong>: 부품 탐색 확률 +${Math.round(player.steadyLearningBonus * 100)}%p`;
                 ui.perk.list.appendChild(li);
             } else {
-                ui.perk.list.innerHTML = '<li>보유한 특성이 없습니다.</li>';
+                ui.perk.list.innerHTML = '<li>보유하거나 획득했던 특성이 없습니다.</li>';
             }
             return;
         }
 
+        // 보유 특성 먼저 표시
         for (const perkId in player.perks) {
             const stack = player.perks[perkId];
             const perkData = PERKS.find(p => p.id === perkId); // perkData가 null일 수 있음
@@ -699,13 +817,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // 퍼센트 단위로 표시해야 하는 특성들
             if (['fast_learner', 'lucky', 'scavenger'].includes(perkId)) {
                 value = Math.round((perkData.baseValue * stack) * 100);
-            } 
+            }
             // 횟수나 고정 수치로 표시해야 하는 특성들
             else if (['intuition', 'confidence'].includes(perkId)) {
                 value = perkData.baseValue * stack;
             }
             // 그 외 {value}를 사용하는 특성 (현재는 없음)
-            else {
+            else if (perkData.id === 'vitality') {
+                value = perkData.baseValue * stack;
+            }
+            else { // '인내의 결실'처럼 복합적인 값이나 {value}를 사용하지 않는 경우
                 value = perkData.baseValue * stack;
             }
 
@@ -713,6 +834,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 description = description.replace('{value}', value);
             }
             li.innerHTML = `${name}: ${description}`;
+            ui.perk.list.appendChild(li);
+        }
+
+        // 제거된 특성 표시
+        for (const perkId in player.removedPerks) {
+            if (player.perks[perkId]) continue; // 아직 보유 중이면 건너뛰기
+
+            const perkData = PERKS.find(p => p.id === perkId);
+            if (!perkData) continue;
+
+            const li = document.createElement('li');
+            li.classList.add('removed');
+            // 제거된 특성은 효과 설명 없이 이름만 표시
+            li.innerHTML = `<strong>${perkData.name}</strong>: ${perkData.description}`;
             ui.perk.list.appendChild(li);
         }
 
@@ -729,6 +864,17 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.xpStat.textContent = `${player.xp} / ${player.xpToLevelUp}`;
     }
 
+    /** 연속 정답 횟수 UI를 업데이트합니다. */
+    function updateStreakUI() {
+        // 2회 이상 연속 정답일 때만 표시
+        if (player.correctStreak > 1) {
+            ui.streakCounter.innerHTML = `🔥 ${player.correctStreak}회 연속 정답!`;
+            ui.streakCounter.classList.remove('hidden');
+        } else {
+            ui.streakCounter.classList.add('hidden');
+        }
+    }
+
     /** 부품 획득 현황 UI를 업데이트합니다. */
     function updatePartsUI() {
         ui.parts.slotsWrapper.innerHTML = '';
@@ -740,6 +886,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (player.parts.includes(partData.id)) {
                 slot.classList.add('acquired');
+                // '급조 부품'으로 얻은 부품은 다른 스타일 적용
+                if (player.improvisedParts.includes(partData.id)) {
+                    slot.classList.add('improvised');
+                }
                 const img = document.createElement('img');
                 img.src = partData.image;
                 img.alt = partData.name;
@@ -915,8 +1065,8 @@ document.addEventListener('DOMContentLoaded', () => {
             player.pendingLevelUps--; // 처리할 레벨업 횟수 차감
             showPerkSelection();
         } else {
-            // 5문제 연속 정답 시 복습 문제 출제
-            if (player.correctStreak > 0 && player.correctStreak % 5 === 0) {
+            // 3문제 연속 정답 시 복습 문제 출제
+            if (player.correctStreak > 0 && player.correctStreak % 3 === 0) {
                 showReviewQuiz();
             } else {
                 nextSituation();
@@ -930,6 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showScreen('info');
         infoToShow = null;
     }
+
     function gameOver() { showScreen('gameOver'); }
     function gameWin() { showScreen('gameWin'); }
 
@@ -1035,6 +1186,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 player.perks[perk.id] = (player.perks[perk.id] || 0) + 1;
                 if (perk.id === 'intuition') player.intuitionCharges += perk.baseValue;
                 if (perk.id === 'confidence') player.confidenceCharges += perk.baseValue;
+                if (perk.id === 'vitality') {
+                    const hpGain = perk.baseValue;
+                    player.maxHp += hpGain;
+                    player.hp += hpGain;
+                }
                 updateAllUI();
                 populateDebugPanel();
             });
@@ -1046,6 +1202,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 player.perks[perk.id]--;
                 if (perk.id === 'intuition') player.intuitionCharges = Math.max(0, player.intuitionCharges - perk.baseValue);
                 if (perk.id === 'confidence') player.confidenceCharges = Math.max(0, player.confidenceCharges - perk.baseValue);
+                if (perk.id === 'vitality') {
+                    const hpLoss = perk.baseValue;
+                    player.maxHp = Math.max(1, player.maxHp - hpLoss);
+                    player.hp = Math.min(player.hp, player.maxHp);
+                }
                 if (player.perks[perk.id] <= 0) {
                     delete player.perks[perk.id];
                 }
@@ -1059,6 +1220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateAllUI() {
         updateStatsUI();
         updatePartsUI();
+        updateStreakUI();
         updatePerkListUI();
         updateIntuitionButton();
         updateConfidenceButton();
