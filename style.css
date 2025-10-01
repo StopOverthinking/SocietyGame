@@ -85,11 +85,18 @@ button:hover {
     cursor: not-allowed;
 }
 
-#choices-container, #perk-choices-container {
+#choices-container, #perk-choices-container, #starting-perk-choices-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 15px; /* 다른 컨테이너들과의 일관성을 위해 margin-top 조정 */
+}
+
+/* --- 게임 모드 선택 버튼 --- */
+#mode-choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #stats-bar, #parts-bar {
@@ -104,11 +111,25 @@ button:hover {
     justify-content: space-around;
 }
 
+/* --- 턴 카운터 스타일 --- */
+#turn-counter {
+    color: #ff8c00; /* 주황색 */
+    font-weight: bold;
+    margin-left: 10px;
+}
+
 /* --- 연속 정답 카운터 스타일 --- */
 #streak-counter {
     color: #ffbf58; /* 강조 노란색 */
     font-weight: bold;
     animation: pulse 1.5s infinite;
+}
+
+/* --- 보호막 UI 스타일 --- */
+#shield-stat {
+    color: #87CEEB; /* 하늘색 */
+    font-weight: bold;
+    margin-left: 4px;
 }
 
 @keyframes pulse {

@@ -17,12 +17,21 @@
             </div>
         </div>
 
-        <!-- 2. 게임 진행 화면 -->
+        <!-- 2. 게임 모드 선택 화면 -->
+        <div id="mode-selection-screen" class="screen hidden">
+            <h2>게임 모드 선택</h2>
+            <p>플레이할 게임 모드를 선택하세요.</p>
+            <div id="mode-choices-container">
+                <!-- 모드 선택 버튼이 동적으로 추가될 영역 -->
+            </div>
+        </div>
+
+        <!-- 3. 게임 진행 화면 -->
         <div id="game-screen" class="screen hidden">
             <img id="situation-image" src="" alt="상황 이미지">
             <div id="stats-bar">
-                <span>❤️ HP: <span id="hp-stat"></span></span>
-                <span>✨ XP: <span id="xp-stat"></span></span>
+                <span>❤️ HP: <span id="hp-stat"></span><span id="shield-stat"></span></span>
+                <span>✨ XP: <span id="xp-stat"></span></span><span id="turn-counter" class="hidden"></span>
                 <span id="streak-counter" class="hidden"></span>
             </div>
             <div id="parts-display-container">
@@ -48,7 +57,7 @@
             <button id="confidence-button" class="hidden perk-action-button"></button>
         </div>
 
-        <!-- 3. 선택 결과 및 주사위 굴림 결과 표시 화면 -->
+        <!-- 4. 선택 결과 및 주사위 굴림 결과 표시 화면 -->
         <div id="result-screen" class="screen hidden">
             <img id="result-image" src="" alt="상황 이미지">
             <div id="roll-animation-display"></div>
@@ -58,12 +67,22 @@
             </div>
         </div>
 
-        <!-- 4. 특성(퍽) 선택 화면 -->
+        <!-- 5. 특성(퍽) 선택 화면 -->
         <div id="perk-screen" class="screen hidden">
             <h2>경험치 보상!</h2>
             <p>경험이 쌓여 새로운 능력을 얻거나, 우주선 부품을 발견했습니다.</p>
             <div id="perk-choices-container">
                 <!-- 특성 또는 부품 버튼이 동적으로 추가될 영역 -->
+            </div>
+            <button id="reroll-perks-button" class="hidden perk-action-button">선택지 다시 뽑기 (1회)</button>
+        </div>
+
+        <!-- 5-2. 시작 특성 선택 화면 (신규) -->
+        <div id="starting-perk-screen" class="screen hidden">
+            <h2>운명의 갈림길</h2>
+            <p>불시착의 충격 속에서, 당신은 새로운 가능성에 눈을 뜹니다. 앞으로의 여정에 도움이 될 하나의 능력을 선택하십시오.</p>
+            <div id="starting-perk-choices-container">
+                <!-- 시작 특성 버튼이 동적으로 추가될 영역 -->
             </div>
         </div>
 
@@ -75,26 +94,26 @@
             <button id="info-continue-button">계속하기</button>
         </div>
 
-        <!-- 5. 게임 오버 화면 -->
+        <!-- 7. 게임 오버 화면 -->
         <div id="game-over-screen" class="screen hidden">
             <h1>GAME OVER</h1>
             <img src="images/game_over.png" alt="게임 오버">
-            <p>체력이 모두 소진되었습니다.</p>
+            <p id="game-over-text">체력이 모두 소진되었습니다.</p>
             <button id="restart-button-gameover">다시 시작</button>
         </div>
 
-        <!-- 6. 게임 클리어 화면 -->
+        <!-- 8. 게임 클리어 화면 -->
         <div id="game-win-screen" class="screen hidden">
             <h1>MISSION COMPLETE</h1>
             <img src="images/game_win.png" alt="게임 클리어">
-            <p>모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!</p>
+            <p id="game-win-text">모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!</p>
             <button id="restart-button-win">다시 시작</button>
         </div>
 
-        <!-- 7. 토스트 알림 (신규) -->
+        <!-- 8. 토스트 알림 (신규) -->
         <div id="toast-notification" class="hidden"></div>
 
-        <!-- 8. 개발자용 디버그 패널 (신규) -->
+        <!-- 10. 개발자용 디버그 패널 (신규) -->
         <div id="debug-panel" class="hidden">
             <h3>- Debug Panel -</h3>
             <p style="font-size: 12px; color: #aaa; margin-bottom: 10px;">(Ctrl + Shift + E 로 열기/닫기)</p>
