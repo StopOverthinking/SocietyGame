@@ -1081,4 +1081,126 @@ const SITUATIONS = [
             }
         ]
     },
+    {
+        id: 36,
+        title: '건조한 땅',
+        image: 'images/situation_36.png',
+        text: `당신은 칠레 아타카마 사막의 해안 마을 주민이다. 이곳은 <span class="highlight-yellow">수십 년간 비가 오지 않은</span> 극도로 건조한 곳으로, 강이나 우물이 없다.<br><br>유일한 수분 공급원은 바다에서 불어오는 <span class="highlight-yellow">짙은 안개</span>뿐이다. 이 안개에서 마을의 식수를 확보해야 한다. 가장 효율적인 방법은?`,
+        choices: [
+            { 
+                text: '물이 나올 때까지 땅을 깊게 파서 우물을 만든다.', 
+                isCorrect: false,
+                failureText: '실패였다. 수십 미터를 파도 마른 흙만 나왔다. 당신은 <span class="highlight-yellow">비가 오지 않는 땅</span>이라는 핵심 정보를 무시하고 불가능한 일에 힘을 낭비했다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '안개 속에서 불을 피워, 수분을 증발시킨 뒤 소금을 얻는다.', 
+                isCorrect: false,
+                failureText: '목표와 반대되는 결과였다. 필요한 것은 <span class="highlight-yellow">마실 물</span>이지 소금이 아니었다. 당신은 땔감만 낭비하고 아무것도 얻지 못했다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '촘촘한 그물을 세워, 안개가 통과하며 물방울이 맺히도록 한다.', 
+                isCorrect: true,
+                successText: '성공적인 방법이었다. 안개가 그물을 통과하며 맺힌 물방울이 모여, <span class="highlight-yellow">공기 중에서 물을 수확</span>할 수 있게 되었다. 마을의 물 문제가 해결되었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_36.png',
+                    text: '칠레 아타카마 사막의 <span class="highlight-yellow">\'안개 포획기\'</span>는 비가 오지 않는 환경에 적응한 기술입니다. <span class="highlight-yellow">바다 안개</span>에 포함된 수분을 촘촘한 그물로 모아 식수와 생활용수를 확보합니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 37,
+        title: '강을 건너는 법',
+        image: 'images/situation_37.png',
+        text: `당신은 세계에서 가장 비가 많이 오는 곳 중 하나인 인도 메갈라야에 산다. 우기가 되면 계곡의 강은 <span class="highlight-yellow">모든 것을 휩쓸어버리는 거센 급류</span>로 변한다.<br><br>마을과 밭을 잇는 다리가 매년 파괴되어 고립되는 문제를 해결해야 한다. 강가에는 <span class="highlight-yellow">뿌리가 튼튼한 고무나무</span>가 많이 자란다. 어떤 다리를 만들어야 하는가?`,
+        choices: [
+            { 
+                text: '강가의 튼튼한 고무나무를 잘라, 통나무 다리를 짓는다.', 
+                isCorrect: false,
+                failureText: '고무나무로 만든 다리는 잠깐은 튼튼했지만, 죽은 나무로 만든 다리는 결국 썩어 무너져버렸다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '강을 건너지 않고, 험준한 산을 빙 둘러가는 새로운 길을 개척한다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '길은 사라지지 않았다. 하지만 밭까지 가는 데 반나절이 걸렸다. <span class="highlight-yellow">너무 비효율적인 경로</span> 때문에, 사실상 농사를 짓는 것은 불가능에 가까웠다. 당신은 문제를 피했을 뿐, 해결하지는 못했다.',
+                failureText: '길을 만드는 데 수개월이 걸렸지만, 결국 아무 소용이 없었다. <span class="highlight-yellow">너무 멀고 험난한 길</span>이라 아무도 이용할 수 없었다. 당신의 노력은 시간 낭비로 끝났다.<br> ❤️ -3',
+                failureDamage: 3
+            },
+            { 
+                text: '강 양쪽의 살아있는 고무나무 뿌리가 서로를 향해 자라도록, 수년에 걸쳐 길을 내고 엮어준다.', 
+                isCorrect: true,
+                successText: '성공적이었다. 살아있는 뿌리는 당신의 유도에 따라 자라나 강을 가로질러 서로 얽혔고, 시간이 지나자 <span class="highlight-yellow">파괴되지 않는 강력한 다리</span>가 되었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_37.png',
+                    text: '인도 메갈라야의 <span class="highlight-yellow">\'살아있는 뿌리 다리\'</span>는 세계에서 가장 비가 많이 오는 기후에 적응한 건축물입니다. 매년 다리를 파괴하는 <span class="highlight-yellow">강력한 몬순 급류</span>를 견디기 위해, 지역 주민들은 <span class="highlight-yellow">살아있는 나무의 뿌리</span>를 엮어 다리를 만듭니다. 이 다리는 시간이 지날수록 더 강해집니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 38,
+        title: '북쪽의 부름',
+        image: 'images/situation_38.png',
+        text: `당신은 20세기 초 알래스카의 개척민이다. 이곳에는 길이 없고, 세상은 <span class="highlight-yellow">깊은 눈과 얼음</span>으로 뒤덮여 있다. 마을과 마을 사이를 이동하고 물자를 운송하기 위해서는 이 혹독한 설원을 가로지를 운송 수단이 반드시 필요하다.<br><br>당신은 함께할 동물을 선택해야 한다. 이 동물은 <span class="highlight-yellow">극한의 추위를 견뎌야 하고, 눈 위를 잘 달려야 하며</span>, 장거리를 이동할 끈기가 있어야 한다. 어떤 동물을 당신의 파트너로 삼겠는가?`,
+        choices: [
+            { 
+                text: '힘이 좋고 지구력이 강한 말을 훈련시켜 짐을 운반한다.', 
+                isCorrect: false,
+                failureText: '치명적인 선택이었다. 말은 <span class="highlight-yellow">깊은 눈에 발이 빠져</span> 앞으로 나아가지 못했고, 혹독한 추위에 금방 지쳐버렸다. 당신은 설원 한가운데서 고립되었다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '추위에 강한 순록 떼를 이용해 썰매를 끌게 한다.', 
+                isCorrect: false,
+                successChance: 0.2,
+                successText: '순록은 추위는 잘 견뎠지만 통제하기 어렵고 발이 느렸다. <span class="highlight-yellow">느린 속도와 무질서</span> 때문에, 당신은 목적지까지 예상보다 몇 배나 긴 시간을 허비했다.',
+                failureText: '계획은 실패했다. 순록은 길들여지지 않은 야생성이 강해, 당신의 지시를 따르지 않고 흩어져 버렸다. 당신은 <span class="highlight-yellow">순록을 통제하는 데 실패</span>했고, 짐과 함께 설원에 남겨졌다.<br> ❤️ -4',
+                failureDamage: 4
+            },
+            { 
+                text: '추위에 강하고 발이 눈에 빠지지 않는 썰매개를 여러 마리 훈련시킨다.', 
+                isCorrect: true,
+                successText: '완벽한 파트너였다. 썰매개들은 <span class="highlight-yellow">지치지 않는 체력으로 눈 위를 질주했고</span>, 당신의 지시에 따라 일사불란하게 움직였다. 당신은 알래스카의 혹독한 환경을 극복할 최고의 운송 수단을 찾았다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_38.png',
+                    text: '알래스카의 <span class="highlight-yellow">\'개썰매\'</span> 문화는 혹한의 설원 기후에 적응하기 위한 필수적인 생존 기술이었습니다. 말과 같은 동물이 다닐 수 없는 <span class="highlight-yellow">깊은 눈밭</span>에서, 추위에 강하고 지구력이 뛰어난 썰매개들은 우편물 배달, 물자 수송, 교통수단으로서 <span class="highlight-yellow">알래스카의 혈관과 같은 역할</span>을 했습니다.'
+                }
+            }
+        ]
+    },
+    {
+        id: 39,
+        title: '하늘 위의 도시',
+        image: 'images/situation_39.png',
+        text: `당신은 볼리비아의 수도 라파스의 도시 계획가다. 이 도시는 안데스 산맥의 <span class="highlight-yellow">가파른 분지 지형</span>에 건설되어, 도시 내 지역 간의 <span class="highlight-yellow">고도 차이가 극심하다.</span><br><br>좁고 구불구불한 도로는 항상 <span class="highlight-yellow">극심한 교통체증</span>에 시달린다. 당신은 이 독특한 지형의 시민들을 위한 새롭고 효율적인 대중교통 시스템을 도입해야 한다. 어떤 방식을 선택하겠는가?`,
+        choices: [
+            { 
+                text: '기존의 도로를 확장하고, 더 많은 버스 노선을 투입하여 문제를 해결한다.', 
+                isCorrect: false,
+                failureText: '상황은 더욱 악화되었다. 가파른 산비탈 때문에 도로를 확장할 공간이 부족했고, 늘어난 버스들은 <span class="highlight-yellow">기존의 교통체증에 그대로 갇혀버렸다.</span> 당신의 계획은 현실을 고려하지 않은 탁상공론이었다.<br> ❤️ -6',
+                failureDamage: 6
+            },
+            { 
+                text: '도시의 지하를 뚫어, 거대한 지하철 시스템을 건설한다.', 
+                isCorrect: false,
+                successChance: 0.1,
+                successText: '천문학적인 비용과 시간을 들여, 겨우 한 개의 노선을 완공했다. 하지만 <span class="highlight-yellow">험준한 산악 지형</span> 때문에 더 이상의 노선 확장은 불가능했다. 당신의 지하철은 도시 전체를 감당하지 못하는 반쪽짜리 성공에 그쳤다.',
+                failureText: '계획은 시작부터 난관에 부딪혔다. <span class="highlight-yellow">극심한 고도차와 불안정한 지반</span> 때문에 터널 공사 비용이 예상을 초과했고, 결국 프로젝트는 중단되었다. 당신은 이 도시의 지형을 너무 쉽게 생각했다.<br> ❤️ -5',
+                failureDamage: 5
+            },
+            { 
+                text: '공중을 가로지르는 케이블카를 설치하여, 도시의 높은 곳과 낮은 곳을 직접 연결한다.', 
+                isCorrect: true,
+                successText: '케이블카는 <span class="highlight-yellow">지상의 교통체증과 상관없이</span> 시민들을 빠르고 조용하게 실어 날랐다. 당신은 도시의 지형적 단점을 공중에서 극복하는 새로운 길을 열었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_39.png',
+                    text: '볼리비아 라파스의 <span class="highlight-yellow">\'미 텔레페리코\'</span>는 세계 최대의 도시 케이블카 시스템입니다. <span class="highlight-yellow">극심한 고도차와 만성적인 교통체증</span>을 가진 분지 지형에서, 케이블카는 지하철이나 도로 확장보다 훨씬 효율적이고 경제적인 대안이었습니다.'
+                }
+            }
+        ]
+    },
 ];
