@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
             text: $('result-text'),
             rollAnimation: $('roll-animation-display'),
             gameOverText: $('game-over-text'),
+            gameWin: {
+                comicContainer: $('game-win-comic-container'),
+                image: $('game-win-image'),
+            },
             gameWinText: $('game-win-text'),
         },
         perk: {
@@ -87,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     const PARTS_TO_COLLECT = PARTS_DATA.map(p => p.id);
     const INTRO_COMIC_CUTS = ['images/intro_1.png', 'images/intro_2.png', 'images/intro_3.png', 'images/intro_4.png', 'images/intro_5.png', 'images/intro_6.png'];
+    const WIN_COMIC_CUTS = ['images/game_win_1.png', 'images/game_win_2.png', 'images/game_win_3.png', 'images/game_win_4.png'];
     const TYPEWRITER_SPEED = 25; // 1초에 40글자 (1000ms / 40 = 25ms)
     
     // 시작 특성 데이터 (신규)
@@ -129,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let infoToShow;
     let currentSituation;
     let currentGameMode;
+    let winCutIndex;
     // let isLevelUpPending = false; // 연속 레벨업 로직으로 대체
     let canRerollPerks = false; // '운명 뒤집기' 특성 사용 가능 여부
     let isConfidenceActive = false;
@@ -163,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         introCutIndex = 0;
         infoToShow = null;
         currentSituation = null;
+        winCutIndex = 0;
         // isLevelUpPending = false;
         canRerollPerks = false;
         player.meditationStreak = 0;
@@ -172,6 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ui.perk.list.innerHTML = '';
         ui.perk.list.classList.add('hidden');
+        ui.restartButtons[1].classList.add('hidden'); // 게임 클리어 버튼 숨기기
+        ui.restartButtons[1].textContent = '처음으로'; // '다시 시작' 버튼 텍스트 초기화
         showIntroCut();
         updatePartsUI();
         updateStatsUI();
@@ -1235,14 +1244,30 @@ document.addEventListener('DOMContentLoaded', () => {
         // UI 업데이트
         updatePerkListUI();
         updateStatsUI(); // 보호막 등 스탯 UI 즉시 업데이트
-
+ 
         // 토스트 메시지로 획득 알림
         showToast(`시작 특성으로 [${perk.name}]을(를) 선택했습니다!`, 3000);
-
+ 
         // 잠시 후 게임 시작
         setTimeout(() => {
             startGame();
-        }, 3000); // 특성 부여 메시지를 확인할 시간을 줌
+        }, 1000); // 특성 부여 메시지를 확인할 시간을 줌
+    }
+
+    /** 승리 컷을 표시합니다. */
+    function showWinCut() {
+        if (winCutIndex < WIN_COMIC_CUTS.length) {
+            ui.result.gameWin.image.src = WIN_COMIC_CUTS[winCutIndex];
+            if (winCutIndex === WIN_COMIC_CUTS.length - 1) {
+                // 마지막 컷에서는 '다시 시작' 버튼 텍스트를 변경하고 클릭 유도 문구 숨김
+                ui.result.gameWinText.innerHTML = '우주선이 성공적으로 미래를 향해 이륙했습니다...<br><small>화면을 클릭하여 계속...</small>';
+            }
+        } else {
+            // 마지막 컷에서 한 번 더 클릭하면 버튼 활성화
+            ui.restartButtons[1].classList.remove('hidden'); // 버튼 표시
+            ui.restartButtons[1].disabled = false; // 버튼 활성화
+            ui.result.gameWinText.innerHTML = '우주선이 성공적으로 미래를 향해 이륙했습니다!'; // 클릭 유도 문구 제거
+        }
     }
 
     function nextIntroCut() {
@@ -1309,12 +1334,20 @@ document.addEventListener('DOMContentLoaded', () => {
         showScreen('gameOver');
     }
 
+    function nextWinCut() {
+        winCutIndex++;
+        showWinCut();
+    }
+
     function gameWin() {
         let winMessage = `모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!`;
         if (currentGameMode === 'emergency') {
             winMessage += `<br>남은 턴: ${30 - player.turns}`;
         }
+        winMessage += '<br><small>화면을 클릭하여 계속...</small>';
         ui.result.gameWinText.innerHTML = winMessage;
+        ui.restartButtons[1].classList.add('hidden'); // 버튼 숨기기
+        ui.restartButtons[1].disabled = true; // 만약을 위해 비활성화도 유지
 
         // 클리어 정보 저장
         try {
@@ -1325,11 +1358,14 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("클리어 정보 저장 실패:", e);
         }
 
+        winCutIndex = 0;
+        showWinCut();
         showScreen('gameWin');
     }
 
     // --- 6. 이벤트 리스너 ---
     ui.intro.container.addEventListener('click', nextIntroCut);
+    ui.result.gameWin.comicContainer.addEventListener('click', nextWinCut);
     ui.nextButton.addEventListener('click', proceedAfterResult);
     ui.info.continueButton.addEventListener('click', proceedAfterInfo);
     ui.intuitionButton.addEventListener('click', useIntuition);
