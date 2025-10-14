@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         modeChoicesContainer: $('mode-choices-container'),
         nextButton: $('next-button'),
+        statsBar: $('stats-bar'), // stats-bar 전체를 제어하기 위해 추가
         restartButtons: [$('restart-button-gameover'), $('restart-button-win')],
         hpStat: $('hp-stat'),
         shieldStat: $('shield-stat'), // 보호막 UI 요소 추가
@@ -165,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chainSuccessStreak: 0, // '연쇄 성공' 특성용 연속 정답 횟수
             correctAnswersSinceReview: 0, // 복습 문제 출제를 위한 누적 정답 횟수
             turns: 0, // 긴급 탈출 모드용 턴 카운터
+            simpleModeCorrectAnswers: 0, // 간단 모드 정답 횟수
         };
         introCutIndex = 0;
         infoToShow = null;
@@ -187,6 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updateStreakUI(); // 초기화 시 연속 정답 UI도 업데이트
         ui.turnCounter.classList.add('hidden');
         showScreen('intro');
+
+        // UI 초기화: 모든 모드에서 기본적으로 보이도록 설정
+        ui.statsBar.classList.remove('hidden');
+        ui.parts.toggleButton.parentElement.classList.remove('hidden');
+        ui.perk.toggleButton.parentElement.classList.remove('hidden');
     }
 
     /** 다음 상황을 제시하거나 게임 종료 조건을 확인합니다. */
@@ -202,6 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return gameOver('시간 초과! 30턴 안에 탈출하지 못했습니다.');
             }
         }
+
+        // 간단 모드 UI 처리
+        if (currentGameMode === 'simple') {
+            ui.statsBar.classList.add('hidden');
+            ui.parts.toggleButton.parentElement.classList.add('hidden');
+            ui.perk.toggleButton.parentElement.classList.add('hidden');
+        }
+
         isConfidenceActive = false; // 새 상황 시작 시 '확신' 상태 초기화
         showScreen('game');
         ui.choicesContainer.innerHTML = ''; // 선택지 숨김
@@ -300,6 +315,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** 플레이어의 선택을 처리합니다. */
     async function handleChoice(choice) {
+        // 간단 모드 로직
+        if (currentGameMode === 'simple') {
+            if (choice.isCorrect) {
+                player.simpleModeCorrectAnswers++;
+                if (player.simpleModeCorrectAnswers >= 10) {
+                    gameWin();
+                } else {
+                    showToast(`정답입니다! (${player.simpleModeCorrectAnswers}/10)`, 1500);
+                    nextSituation();
+                }
+            } else {
+                showToast('오답입니다. 다른 문제에 다시 도전해보세요.', 2000);
+                nextSituation();
+            }
+            return; // 간단 모드에서는 아래 로직을 실행하지 않음
+        }
+
         // 어려움 모드: 오답 즉시 게임오버
         if (currentGameMode === 'hard' && !choice.isCorrect) {
             gameOver('어려움 모드: 잘못된 선택으로 임무에 실패했습니다.');
@@ -1178,7 +1210,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const hardModeUnlocked = progress.normalCleared || false;
 
         const modes = [
-            { id: 'normal', name: '일반 모드', description: '표준 난이도로 게임을 진행합니다.' },
+            { id: 'normal', name: '일반 모드', description: '표준 난이도로 게임을 진행하며 행성을 탈출합니다.' },
+            { id: 'simple', name: '간단 모드', description: '체력, 레벨 없이 10개의 문제를 맞히면 승리합니다.' },
             { id: 'hard', name: '어려움 모드', description: '단 한 번의 실수도 용납되지 않습니다. (일반 모드 클리어 시 해금)' },
             { id: 'emergency', name: '긴급 탈출 모드', description: '30턴 안에 행성을 탈출해야 합니다. (일반 모드 클리어 시 해금)' }
         ];
@@ -1204,7 +1237,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function selectGameMode(modeId) {
         currentGameMode = modeId;
         showToast(`[${modeId.charAt(0).toUpperCase() + modeId.slice(1)} 모드]로 시작합니다.`, 2000);
-        showStartingPerkSelection();
+        
+        if (modeId === 'simple') {
+            startGame(); // 간단 모드는 특성 선택 없이 바로 시작
+        } else {
+            showStartingPerkSelection();
+        }
     }
 
     /** 시작 특성 선택 화면을 표시합니다. (신규) */
@@ -1340,6 +1378,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function gameWin() {
+        if (currentGameMode === 'simple') {
+            showScreen('gameWin');
+            ui.result.gameWinText.innerHTML = `축하합니다! 10문제를 모두 맞혀 간단 모드를 클리어했습니다.`;
+            ui.restartButtons[1].classList.remove('hidden');
+            return;
+        }
         let winMessage = `모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!`;
         if (currentGameMode === 'emergency') {
             winMessage += `<br>남은 턴: ${30 - player.turns}`;
