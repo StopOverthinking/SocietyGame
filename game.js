@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'natural_healing', name: '🌿 자연치유', type: 'unique', description: '상황이 지날 때마다 체력을 <span class="highlight-yellow">2</span> 회복합니다.' },
         { id: 'instant_recovery', name: '❤️‍🩹 즉시 회복', type: 'instant', baseValue: 10, description: '즉시 체력을 <span class="highlight-yellow">{value}</span> 회복합니다.' },
         { id: 'lucky_find', name: '🍀 행운의 발견', type: 'stackable', baseValue: 0.2, description: '특성 획득 시, 중첩 당 <span class="highlight-yellow">20%</span> 확률로 우주선 부품을 추가로 발견합니다.' },
-        { id: 'glass_cannon', name: '🫙 유리 대포', type: 'unique', description: '경험치 획득량이 <span class="highlight-yellow">2배</span>가 되지만, 받는 모든 피해가 <span class="highlight-yellow">1.5배</span>로 증가합니다.' },
+        { id: 'glass_cannon', name: '🫙 유리 대포', type: 'unique', description: '경험치 획득량이 <span class="highlight-yellow">50%</span> 증가하지만, 받는 모든 피해가 <span class="highlight-yellow">1.5배</span>로 증가합니다.' },
         { id: 'confidence', name: '💯 확신', type: 'stackable', baseValue: 3, description: '이번 문제를 맞히면 경험치를 2배로 획득하는 능력을 <span class="highlight-yellow">{value}회</span> 얻습니다.' },
         { id: 'open_mind', name: '👁️ 열린 시야', type: 'unique', description: '특성 선택지가 <span class="highlight-yellow">1개</span> 추가로 나타납니다.' },
         { id: 'forbidden_deal', name: '😈 금단의 거래', type: 'instant', description: '체력을 <span class="highlight-yellow">5</span> 소모하고, 무작위 특성을 <span class="highlight-yellow">2개</span> 획득합니다.' },
@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
         while (player.xp >= player.xpToLevelUp) {
             const patienceStacks = player.perks['fruit_of_patience'] || 0;
             const patienceXpIncrease = patienceStacks > 0 ? PERKS.find(p => p.id === 'fruit_of_patience').baseValue.xpIncrease * patienceStacks : 0;
-            const xpMultiplier = 1.1 + patienceXpIncrease; // 기본 10% + 인내의 결실 보너스
+            const xpMultiplier = 1.2 + patienceXpIncrease; // 기본 20% + 인내의 결실 보너스
 
             player.xp -= player.xpToLevelUp;
             player.xpToLevelUp = Math.floor(player.xpToLevelUp * xpMultiplier);
@@ -859,7 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fastLearnerAdditiveBonus = (perks.fast_learner || 0) * PERKS.find(p => p.id === 'fast_learner').baseValue;
         
         // '유리 대포'의 경험치 배율
-        const glassCannonXpMultiplier = perks.glass_cannon ? 2 : 1;
+        const glassCannonXpMultiplier = perks.glass_cannon ? 1.5 : 1;
 
         const stats = {
             damageReduction: 0, // 이 게임에서는 피해 감소 특성이 없음

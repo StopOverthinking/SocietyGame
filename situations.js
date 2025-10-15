@@ -223,12 +223,12 @@ const SITUATIONS = [
                 }
             },
             { 
-                text: '방수 우비 모자', 
+                text: '방수 우비 ', 
                 image: 'images/choice_7_3.png',
                 isCorrect: false,
                 successChance: 0.3,
-                successText: '비는 피할 수 있었지만, 비가 그치고 해가 뜨자 <span class="highlight-yellow">바람이 통하지 않는 방수 모자</span> 때문에 머리에 땀이 차고 더워서 일할 수 없었다.',
-                failureText: '최악의 선택이었다. 비가 오지 않는 동안, 바람이 안 통하는 방수 모자는 머리를 찜통으로 만들었다. <span class="highlight-yellow">땀과 더운 기운이 빠져나가지 못해</span> 어지러움을 느끼며 쓰러질 뻔했다.<br> ❤️ -5',
+                successText: '비는 피할 수 있었지만, 비가 그치고 해가 뜨자 <span class="highlight-yellow">바람이 통하지 않는 방수 우비</span> 때문에 머리에 땀이 차고 더워서 일할 수 없었다.',
+                failureText: '최악의 선택이었다. 비가 오지 않는 동안, 바람이 안 통하는 방수 우비는 머리를 찜통으로 만들었다. <span class="highlight-yellow">땀과 더운 기운이 빠져나가지 못해</span> 어지러움을 느끼며 쓰러질 뻔했다.<br> ❤️ -5',
                 failureDamage: 5
             }
         ]
