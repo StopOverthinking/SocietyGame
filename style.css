@@ -122,8 +122,9 @@ button:active {
 .choice-button .choice-image {
     width: 70%;
     height: 70%;
-    object-fit: cover;
+    object-fit: contain; /* 이미지가 잘리지 않고 비율에 맞게 표시되도록 변경 */
     border-radius: 4px;
+    margin-bottom: 0.5em; /* 이미지와 텍스트 사이에 고정 간격 추가 */
 }
 
 .choice-button .choice-text {
@@ -140,6 +141,23 @@ button:active {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+/* --- 문제 유형 카운터 바 --- */
+#category-counter-bar {
+    background-color: #2a2a2a;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-around;
+    color: #ccc;
+}
+
+/* 카운터 바 제목 스타일 */
+.category-title {
+    margin: 0 0 8px 0; /* 위/아래 여백 조정 */
+    font-size: 14px;
 }
 
 #stats-bar, #parts-bar {
@@ -303,6 +321,12 @@ button:active {
     min-height: 46px; 
 }
 
+/* 결과 및 정보 텍스트 크기 조정 */
+#result-text,
+#info-text {
+    font-size: 1.2em; /* 기본 p 태그 폰트 크기의 120% */
+}
+
 /* --- 상황 표시 스타일 --- */
 #situation-container {
     display: flex;
@@ -321,7 +345,7 @@ button:active {
 }
 
 #situation-text { 
-    font-size: 15px; }
+    font-size: 18px; }
 
 .highlight-yellow {
     color: #ffbf58;

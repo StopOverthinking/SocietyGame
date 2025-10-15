@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
         shieldStat: $('shield-stat'), // 보호막 UI 요소 추가
         xpStat: $('xp-stat'),
         streakCounter: $('streak-counter'), // 연속 정답 카운터 UI 요소 추가
+        categoryCounters: {
+            ui: $('category-count-ui'),
+            sik: $('category-count-sik'),
+            ju: $('category-count-ju'),
+            etc: $('category-count-etc'),
+        },
         turnCounter: $('turn-counter'),
         situation: {
             image: $('situation-image'),
@@ -75,14 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. 게임 데이터 (상수) ---
     const PARTS_DATA = [
-        { id: '동력 코어', name: '동력 코어', image: 'images/part_core.png' },
-        { id: '항법 장치', name: '항법 장치', image: 'images/part_nav.png' },
-        { id: '선체 안정기', name: '선체 안정기', image: 'images/part_stabilizer.png' },
-        { id: '통신 모듈', name: '통신 모듈', image: 'images/part_comm.png' },
-        { id: '생명 유지 장치', name: '생명 유지 장치', image: 'images/part_life_support.png' }
+        { id: '동력 코어', name: '동력 코어', image: 'images/part_core.jpg' },
+        { id: '항법 장치', name: '항법 장치', image: 'images/part_nav.jpg' },
+        { id: '선체 안정기', name: '선체 안정기', image: 'images/part_stabilizer.jpg' },
+        { id: '통신 모듈', name: '통신 모듈', image: 'images/part_comm.jpg' },
+        { id: '생명 유지 장치', name: '생명 유지 장치', image: 'images/part_life_support.jpg' }
     ];
     const PARTS_TO_COLLECT = PARTS_DATA.map(p => p.id);
-    const TYPEWRITER_SPEED = 25; // 1초에 40글자 (1000ms / 40 = 25ms)
     
     // 시작 특성 데이터 (신규)
     const STARTING_PERKS = [
@@ -92,16 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const PERKS = [
-        { id: 'fast_learner', name: '📖 빠른 학습', type: 'stackable', baseValue: 0.5, description: '경험치 획득량이 <span class="highlight-yellow">{value}%</span> 증가합니다.' },
-        { id: 'scavenger', name: '⚒️ 탐색 전문가', type: 'stackable', baseValue: 0.25, description: '부품 탐색 성공 확률이 <span class="highlight-yellow">{value}%p</span> 증가합니다.' },
+        { id: 'fast_learner', name: '📖 빠른 학습', type: 'stackable', baseValue: 0.3, description: '경험치 획득량이 <span class="highlight-yellow">{value}%</span> 증가합니다.' },
+        { id: 'scavenger', name: '⚒️ 탐색 전문가', type: 'stackable', baseValue: 0.15, description: '부품 탐색 성공 확률이 <span class="highlight-yellow">{value}%p</span> 증가합니다.' },
         { id: 'indomitable_will', name: '✊ 굳건한 의지', type: 'unique', description: '게임 오버에 달하는 피해를 입을 경우, 해당 피해를 <span class="highlight-yellow">1회</span> 무효화하고 그만큼 체력을 회복합니다.' },
         { id: 'natural_healing', name: '🌿 자연치유', type: 'unique', description: '상황이 지날 때마다 체력을 <span class="highlight-yellow">2</span> 회복합니다.' },
-        { id: 'instant_recovery', name: '❤️‍🩹 즉시 회복', type: 'instant', baseValue: 10, description: '즉시 체력을 <span class="highlight-yellow">{value}</span> 회복합니다.' },
+        { id: 'instant_recovery', name: '❤️‍🩹 즉시 회복', type: 'instant', baseValue: 15, description: '즉시 체력을 <span class="highlight-yellow">{value}</span> 회복합니다.' },
         { id: 'lucky_find', name: '🍀 행운의 발견', type: 'stackable', baseValue: 0.2, description: '특성 획득 시, 중첩 당 <span class="highlight-yellow">20%</span> 확률로 우주선 부품을 추가로 발견합니다.' },
-        { id: 'glass_cannon', name: '🫙 유리 대포', type: 'unique', description: '경험치 획득량이 <span class="highlight-yellow">50%</span> 증가하지만, 받는 모든 피해가 <span class="highlight-yellow">1.5배</span>로 증가합니다.' },
+        { id: 'glass_cannon', name: '🫙 유리 대포', type: 'unique', description: '경험치 획득량과 받는 피해가 <span class="highlight-yellow">50%</span> 증가합니다.' },
         { id: 'confidence', name: '💯 확신', type: 'stackable', baseValue: 3, description: '이번 문제를 맞히면 경험치를 2배로 획득하는 능력을 <span class="highlight-yellow">{value}회</span> 얻습니다.' },
         { id: 'open_mind', name: '👁️ 열린 시야', type: 'unique', description: '특성 선택지가 <span class="highlight-yellow">1개</span> 추가로 나타납니다.' },
-        { id: 'forbidden_deal', name: '😈 금단의 거래', type: 'instant', description: '체력을 <span class="highlight-yellow">5</span> 소모하고, 무작위 특성을 <span class="highlight-yellow">2개</span> 획득합니다.' },
+        { id: 'forbidden_deal', name: '❓ 미지의 힘', type: 'instant', description: '무작위 특성을 <span class="highlight-yellow">2개</span> 획득합니다.' },
         { id: 'chain_success', name: '🔗 연쇄 성공', type: 'unique', description: '3번 연속으로 정답을 맞히면 우주선 부품 1개를 확정적으로 획득합니다. (1회 한정)' },
         { id: 'amazing_coincidence', name: '🪙 기막힌 우연', type: 'unique', description: '부품 획득에 성공할 때, <span class="highlight-yellow">50%</span> 확률로 추가로 1개 더 얻습니다.' },
         { id: 'desperate_dash', name: '🏃 목숨을 건 질주', type: 'unique', description: '모든 체력 회복이 비활성화되고, 상황마다 체력을 1 잃습니다. 레벨업 시 부품 탐색만 나타나며, 부품 획득 확률이 <span class="highlight-yellow">2배</span>로 증가합니다.' },
@@ -109,9 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'steady_learning', name: '🖊️ 꾸준한 학습', type: 'stackable', baseValue: 0.03, description: '정답을 맞힐 때마다 부품 탐색 성공 확률이 중첩 당 <span class="highlight-yellow">3%p</span>씩 영구적으로 증가합니다.' },
         { id: 'part_trader', name: '⚙️ 부품 거래상', type: 'unique', description: '레벨업 시, 체력 6을 소모하고 우주선 부품 1개를 확정적으로 획득하는 선택지가 나타납니다. (체력 6 초과, 남은 부품이 있을 시)' },
         { id: 'improvised_parts', name: '🔩 급조 부품', type: 'unique', description: '즉시 무작위 부품 2개를 획득합니다. 하지만, 피해를 입으면 이 특성으로 얻은 부품을 모두 잃습니다.' },
-        { id: 'dimensional_detector_a', name: '🛰️ 차원 탐지기 A', type: 'unique', description: '차원 탐지기 B와 함께 보유 시, 부품 탐색 성공 확률이 <span class="highlight-yellow">50%p</span> 증가합니다.' },
-        { id: 'dimensional_detector_b', name: '🛰️ 차원 탐지기 B', type: 'unique', description: '차원 탐지기 A와 함께 보유 시, 부품 탐색 성공 확률이 <span class="highlight-yellow">50%p</span> 증가합니다.' },
-        { id: 'fruit_of_patience', name: '🌱 인내의 결실', type: 'stackable', baseValue: { xpIncrease: 0.2, partChance: 0.35 }, description: '레벨업 시 요구 경험치 증가량이 중첩 당 <span class="highlight-yellow">20%p</span> 늘어나지만, 부품 탐색 성공 확률이 <span class="highlight-yellow">35%p</span> 증가합니다.' },
+        { id: 'dimensional_detector_a', name: '🛰️ 차원 탐지기 A', type: 'unique', description: '차원 탐지기 B와 함께 보유 시, 부품 탐색 성공 확률이 <span class="highlight-yellow">40%p</span> 증가합니다.' },
+        { id: 'dimensional_detector_b', name: '🛰️ 차원 탐지기 B', type: 'unique', description: '차원 탐지기 A와 함께 보유 시, 부품 탐색 성공 확률이 <span class="highlight-yellow">40%p</span> 증가합니다.' },
+        { id: 'fruit_of_patience', name: '🌱 인내의 결실', type: 'stackable', baseValue: { xpIncrease: 0.2, partChance: 0.25 }, description: '레벨업 시 요구 경험치 증가량이 중첩 당 <span class="highlight-yellow">20%p</span> 늘어나지만, 부품 탐색 성공 확률이 <span class="highlight-yellow">25%p</span> 증가합니다.' },
     ];
 
     // --- 3. 게임 상태 (변수) ---
@@ -127,12 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** 게임을 초기 상태로 설정합니다. */
     function initGame() {
+        // currentGameMode는 이 함수 호출 전에 설정되어 있어야 합니다.
         player = {
             hp: 20,
             maxHp: 20,
             shield: 0, // 보호막 속성 추가
             xp: 0, 
-            xpToLevelUp: 5,
+            xpToLevelUp: (currentGameMode === 'hard' || currentGameMode === 'very_hard') ? 10 : 5, // 어려움/매우 어려움 모드 초기 경험치 요구량 10
             parts: [],
             perks: {}, // { perkId: stackCount }
             removedPerks: {}, // 제거된 특성 추적 { perkId: true }
@@ -147,8 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             steadyLearningStreak: 0, // '꾸준한 학습' 특성용 연속 정답 횟수
             chainSuccessStreak: 0, // '연쇄 성공' 특성용 연속 정답 횟수
             correctAnswersSinceReview: 0, // 복습 문제 출제를 위한 누적 정답 횟수
+            correctAnswersByType: { '의': 0, '식': 0, '주': 0, '기타': 0 }, // 유형별 정답 수
             turns: 0, // 긴급 탈출 모드용 턴 카운터
-            simpleModeCorrectAnswers: 0, // 간단 모드 정답 횟수
         }; 
         infoToShow = null;
         currentSituation = null;
@@ -165,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePartsUI();
         updateStatsUI();
         updateStreakUI(); // 초기화 시 연속 정답 UI도 업데이트
+        updateCategoryCounterUI(); // 카테고리 카운터 UI 초기화
         ui.turnCounter.classList.add('hidden');
         showScreen('start');
 
@@ -183,16 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
         player.turns++;
         if (currentGameMode === 'emergency') {
             updateTurnCounterUI();
-            if (player.turns > 30) {
-                return gameOver('시간 초과! 30턴 안에 탈출하지 못했습니다.');
+            if (player.turns > 15) {
+                return gameOver('시간 초과! 15턴 안에 탈출하지 못했습니다.');
             }
-        }
-
-        // 간단 모드 UI 처리
-        if (currentGameMode === 'simple') {
-            ui.statsBar.classList.add('hidden');
-            ui.parts.toggleButton.parentElement.classList.add('hidden');
-            ui.perk.toggleButton.parentElement.classList.add('hidden');
         }
 
         isConfidenceActive = false; // 새 상황 시작 시 '확신' 상태 초기화
@@ -235,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = document.createElement('img');
             img.src = choice.image || 'images/placeholder.png'; 
             img.alt = choice.text;
+            img.loading = 'lazy'; // 이미지 지연 로딩 적용
             img.className = 'choice-image';
             img.onerror = () => { img.src = 'images/placeholder.png'; }; // 이미지 로드 실패 시
 
@@ -277,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.situation.text.classList.remove('fade-in');
         ui.situation.text.innerHTML = '';
 
-        ui.situation.image.src = `images/situation_${reviewSituationId}.png`;
+        ui.situation.image.src = `images/situation_${reviewSituationId}.jpg`;
         ui.situation.title.textContent = "📝 복습 문제";
         ui.situation.text.innerHTML = reviewQuestion.text;
         ui.situation.text.classList.add('fade-in');
@@ -308,26 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** 플레이어의 선택을 처리합니다. */
     async function handleChoice(choice) {
-        // 간단 모드 로직
-        if (currentGameMode === 'simple') {
-            if (choice.isCorrect) {
-                player.simpleModeCorrectAnswers++;
-                if (player.simpleModeCorrectAnswers >= 10) {
-                    gameWin();
-                } else {
-                    showToast(`정답입니다! (${player.simpleModeCorrectAnswers}/10)`, 1500);
-                    nextSituation();
-                }
-            } else {
-                showToast('오답입니다. 다른 문제에 다시 도전해보세요.', 2000);
-                nextSituation();
-            }
-            return; // 간단 모드에서는 아래 로직을 실행하지 않음
-        }
-
-        // 어려움 모드: 오답 즉시 게임오버
-        if (currentGameMode === 'hard' && !choice.isCorrect) {
-            gameOver('어려움 모드: 잘못된 선택으로 임무에 실패했습니다.');
+        // 매우 어려움 모드: 오답 즉시 게임오버
+        if (currentGameMode === 'very_hard' && !choice.isCorrect) {
+            gameOver('매우 어려움 모드: 잘못된 선택으로 임무에 실패했습니다.');
             return;
         }
 
@@ -375,6 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!player.answeredSituations.includes(currentSituation.id)) {
                 player.answeredSituations.push(currentSituation.id);
             }
+            // 유형별 정답 수 업데이트
+            const type = currentSituation.type || '기타'; // type이 없는 경우 '기타'로 처리
+            player.correctAnswersByType[type] = (player.correctAnswersByType[type] || 0) + 1;
+            updateCategoryCounterUI();
+
 
             // '연쇄 성공' 특성 처리
             if (player.perks['chain_success'] && !player.chainSuccessUsed && player.chainSuccessStreak >= 3) {
@@ -491,9 +480,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const requiredRoll = 100 - Math.round(Math.min(totalSuccessChance, 1) * 100);
         const roll = Math.floor(Math.random() * 100) + 1;
 
-        // 어려움 모드: 확률 판정 실패 시 즉시 게임오버
-        if (currentGameMode === 'hard' && roll <= requiredRoll) {
-            gameOver('어려움 모드: 운이 따르지 않아 임무에 실패했습니다.');
+        // 매우 어려움 모드: 확률 판정 실패 시 즉시 게임오버
+        if (currentGameMode === 'very_hard' && roll <= requiredRoll) {
+            gameOver('매우 어려움 모드: 운이 따르지 않아 임무에 실패했습니다.');
             return;
         }
 
@@ -769,8 +758,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         setTimeout(() => showToast(`[목숨을 건 질주] 효과로 체력이 회복되지 않습니다.`, 2000), 500);
                     }
                 } else if (perk.id === 'forbidden_deal') {
-                    player.hp -= 5;
-                    setTimeout(() => showToast(`체력을 5 소모하고 특성 2개를 획득합니다.`, 2500), 500);
+                    setTimeout(() => showToast(`[미지의 힘] 효과로 무작위 특성 2개를 획득합니다.`, 2500), 500);
                     setTimeout(() => grantRandomPerk(), 1500);
                     setTimeout(() => grantRandomPerk(), 2500);
                 }
@@ -847,12 +835,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const { fastLearnerAdditiveBonus, glassCannonXpMultiplier } = getCalculatedPlayerStats();
         // '빠른 학습'의 합연산 보너스를 먼저 적용하고, 그 결과에 '유리 대포'의 배율을 적용
         let finalXp = Math.ceil(baseXp * (1 + fastLearnerAdditiveBonus) * glassCannonXpMultiplier);
-        if (isConfidenceActive) finalXp *= 2; // '확신' 효과 적용
+        if (isConfidenceActive) finalXp *= 2; // '확신' 효과 적용 
         return finalXp;
     }
 
     /** 플레이어의 현재 스탯을 기반으로 계산된 값을 반환합니다. */
     function getCalculatedPlayerStats() {
+        const basePartChance = (currentGameMode === 'hard' || currentGameMode === 'very_hard') ? 0.15 : 0.25; // 어려움/매우 어려움 모드 기본 부품 탐색 확률 15%
         const perks = player.perks;
         
         // '빠른 학습'의 순수 합연산 보너스
@@ -867,10 +856,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // 경험치 계산에 사용될 개별 컴포넌트
             fastLearnerAdditiveBonus: fastLearnerAdditiveBonus,
             glassCannonXpMultiplier: glassCannonXpMultiplier,
-            partDiscoveryChance: 0.25 +
+            partDiscoveryChance: basePartChance +
                                  ((perks.scavenger || 0) * PERKS.find(p => p.id === 'scavenger').baseValue) +
                                  (player.steadyLearningBonus || 0) +
-                                 (perks.dimensional_detector_a && perks.dimensional_detector_b ? 0.5 : 0) + // 차원 탐지기 세트 효과
+                                 (perks.dimensional_detector_a && perks.dimensional_detector_b ? 0.4 : 0) + // 차원 탐지기 세트 효과
                                  ((perks.fruit_of_patience || 0) * PERKS.find(p => p.id === 'fruit_of_patience').baseValue.partChance) // 인내의 결실 효과
         };
 
@@ -962,11 +951,19 @@ document.addEventListener('DOMContentLoaded', () => {
     /** 긴급 탈출 모드 턴 카운터 UI를 업데이트합니다. */
     function updateTurnCounterUI() {
         if (currentGameMode === 'emergency') {
-            ui.turnCounter.textContent = `⏳ ${player.turns}/30`;
+            ui.turnCounter.textContent = `⏳ ${player.turns}/15`;
             ui.turnCounter.classList.remove('hidden');
         } else {
             ui.turnCounter.classList.add('hidden');
         }
+    }
+
+    /** 문제 유형별 정답 개수 UI를 업데이트합니다. */
+    function updateCategoryCounterUI() {
+        ui.categoryCounters.ui.textContent = player.correctAnswersByType['의'] || 0;
+        ui.categoryCounters.sik.textContent = player.correctAnswersByType['식'] || 0;
+        ui.categoryCounters.ju.textContent = player.correctAnswersByType['주'] || 0;
+        ui.categoryCounters.etc.textContent = player.correctAnswersByType['기타'] || 0;
     }
 
     /** 연속 정답 횟수 UI를 업데이트합니다. */
@@ -1097,27 +1094,23 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.modeChoicesContainer.innerHTML = '';
 
         const progress = JSON.parse(localStorage.getItem('gameProgress')) || {};
-        const hardModeUnlocked = progress.normalCleared || false;
 
         const modes = [
-            { id: 'normal', name: '일반 모드', description: '표준 난이도로 게임을 진행하며 행성을 탈출합니다.' },
-            { id: 'simple', name: '간단 모드', description: '체력, 레벨 없이 10개의 문제를 맞히면 승리합니다.' },
-            { id: 'hard', name: '어려움 모드', description: '단 한 번의 실수도 용납되지 않습니다. (일반 모드 클리어 시 해금)' },
-            { id: 'emergency', name: '긴급 탈출 모드', description: '30턴 안에 행성을 탈출해야 합니다. (일반 모드 클리어 시 해금)' }
+            { id: 'easy', name: '쉬움 모드', description: '표준 난이도로 게임을 진행하며 행성을 탈출합니다.' },
+            { id: 'hard', name: '어려움 모드', description: '시작 특성 없이, 더 높은 경험치 요구량과 낮은 부품 획득 확률로 도전합니다.' },
+            { id: 'very_hard', name: '매우 어려움 모드', description: '단 한 번도 실수하면 안 되는 어려움 모드입니다.' },
+            { id: 'emergency', name: '긴급 탈출 모드', description: '쉬움 모드 기반으로, 15턴 안에 행성을 탈출해야 합니다.' }
         ];
 
         modes.forEach(mode => {
             const button = document.createElement('button');
-            const isLocked = (mode.id === 'hard' || mode.id === 'emergency') && !hardModeUnlocked;
             const isCleared = progress[`${mode.id}Cleared`] || false;
 
             let buttonText = `<strong>${mode.name}</strong>`;
             if (isCleared) buttonText += ' ✅';
-            if (isLocked) buttonText += ' 🔒';
             buttonText += `<br><small>${mode.description}</small>`;
 
             button.innerHTML = buttonText;
-            button.disabled = isLocked;
             button.onclick = () => selectGameMode(mode.id);
             ui.modeChoicesContainer.appendChild(button);
         });
@@ -1127,11 +1120,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function selectGameMode(modeId) {
         currentGameMode = modeId;
         showToast(`[${modeId.charAt(0).toUpperCase() + modeId.slice(1)} 모드]로 시작합니다.`, 2000);
-        
-        if (modeId === 'simple') {
-            startGame(); // 간단 모드는 특성 선택 없이 바로 시작
+
+        if (modeId === 'hard' || modeId === 'very_hard') {
+            startGame(); // 어려움/매우 어려움 모드는 특성 선택 없이 바로 시작
         } else {
-            showStartingPerkSelection();
+            showStartingPerkSelection(); // 시작 특성 선택 화면으로 이동
         }
     }
 
@@ -1142,7 +1135,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
         STARTING_PERKS.forEach(perk => {
             const button = document.createElement('button');
-            button.innerHTML = `[시작 특성] ${perk.name}: ${perk.description}`;
+            button.innerHTML = `${perk.name}: ${perk.description}`;
             button.onclick = () => selectStartingPerk(perk);
             ui.startingPerk.choicesContainer.appendChild(button);
         });
@@ -1183,6 +1176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startGame() {
+        initGame(); // 게임을 실제로 시작할 때 상태를 초기화합니다.
         showScreen('game');
         nextSituation();
     }
@@ -1243,15 +1237,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function gameWin() {
-        if (currentGameMode === 'simple') {
-            showScreen('gameWin');
-            ui.result.gameWinText.innerHTML = `축하합니다! 10문제를 모두 맞혀 간단 모드를 클리어했습니다.`;
-            ui.restartButtons[1].classList.remove('hidden');
-            return;
-        }
         let winMessage = `모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!`;
         if (currentGameMode === 'emergency') {
-            winMessage += `<br>남은 턴: ${30 - player.turns}`;
+            winMessage += `<br>남은 턴: ${15 - player.turns}`;
         }
         ui.result.gameWinText.innerHTML = winMessage;
 
@@ -1327,7 +1315,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateAllUI();
             populateDebugPanel();
         });
-
     }
 
     function populateDebugPanel() {
@@ -1412,10 +1399,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePartsUI();
         updateStreakUI();
         updatePerkListUI();
+        updateCategoryCounterUI();
         updateConfidenceButton();
     }
 
     // --- 7. 게임 시작 ---
-    initGame();
+    initGame(); // 페이지 로드 시 게임 상태를 한 번 초기화합니다.
+    showScreen('start'); // 그 후 시작 화면을 표시합니다.
     setupDebugMode(); // 디버그 모드 활성화
 });
