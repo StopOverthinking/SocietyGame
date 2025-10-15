@@ -9,12 +9,13 @@
 <body>
 
     <div id="game-container">
-        <!-- 1. 인트로 화면 -->
-        <div id="intro-screen" class="screen" style="gap: 0;">
-            <div id="intro-comic-container">
-                <img id="intro-comic-image" src="" alt="인트로 만화">
-                <p>화면을 클릭하여 계속...</p>
-            </div>
+        <!-- 1. 게임 시작 화면 -->
+        <div id="start-screen" class="screen">
+            <h2>🚀 생존과 탈출</h2>
+            <p>우주선이 파괴되어 지구 곳곳에 <span class="highlight-yellow">부품</span>이 흩어졌습니다!<br><br>
+                부품을 되찾아 수리해야 합니다.<br>
+                각 지역의 환경과 문화에 가장 <span class="highlight-yellow">적절한 선택</span>을 내려 생존하고, 흩어진 부품을 모두 모으세요!</p>
+            <button id="start-game-button">게임 시작</button>
         </div>
 
         <!-- 2. 게임 모드 선택 화면 -->
@@ -97,7 +98,6 @@
         <!-- 7. 게임 오버 화면 -->
         <div id="game-over-screen" class="screen hidden">
             <h1>GAME OVER</h1>
-            <img src="images/game_over.png" alt="게임 오버">
             <p id="game-over-text">체력이 모두 소진되었습니다.</p>
             <button id="restart-button-gameover">다시 시작</button>
         </div>
@@ -105,11 +105,8 @@
         <!-- 8. 게임 클리어 화면 -->
         <div id="game-win-screen" class="screen hidden">
             <h1>MISSION COMPLETE</h1>
-            <div id="game-win-comic-container">
-                <img id="game-win-image" src="images/game_win_1.png" alt="게임 클리어">
-                <p id="game-win-text">모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!</p>
-            </div>
-            <button id="restart-button-win">처음으로</button>
+            <p id="game-win-text">모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!</p>
+            <button id="restart-button-win">다시 시작</button>
         </div>
 
         <!-- 8. 토스트 알림 (신규) -->
@@ -144,6 +141,6 @@
     <script src="situations.js"></script>
     <script src="keywords.js"></script>
     <script src="review.js"></script>
-    <script src="game.js"></script>
+    <script src="game.js"></script> 
 </body>
 </html>
