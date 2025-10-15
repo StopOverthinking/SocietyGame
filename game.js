@@ -360,9 +360,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (player.perks.meditation) player.meditationStreak++;
             if (player.perks.steady_learning) player.steadyLearningStreak++;
             if (player.perks.chain_success) player.chainSuccessStreak++;
-            player.correctAnswersSinceReview++; // 누적 정답 횟수 증가
+            player.correctAnswersSinceReview++;
             updateStreakUI(); // 정답 시 스트릭 UI 즉시 업데이트
-            const baseXP = 7; // 기본 경험치 획득량을 7로 통일
+            const baseXP = 5; // 기본 경험치 획득량을 5로 설정
             const actualXpGained = calculateXpGained(baseXP);
             let successMessage = choice.successText || `올바른 선택입니다! 무사히 통과했습니다.<br>✨ +{xpGained}`;
             if (isConfidenceActive) {
@@ -437,8 +437,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (player.perks.meditation) player.meditationStreak++;
             if (player.perks.steady_learning) player.steadyLearningStreak++;
             if (player.perks.chain_success) player.chainSuccessStreak++;
-            player.correctAnswersSinceReview++; // 누적 정답 횟수 증가
-            const xp = 7; // 복습 문제 정답 시 고정 경험치
+            player.correctAnswersSinceReview++;
+            const xp = 5; // 복습 문제 정답 시 고정 경험치
             gainXp(xp);
             await displayText(ui.result.text, `정답입니다! 정확하게 기억하고 있군요.<br>✨ +${calculateXpGained(xp)}`);
 
