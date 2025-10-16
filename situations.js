@@ -942,7 +942,7 @@ const SITUATIONS = [
                 text: '유청을 가축에게 먹여 사료로 활용', 
                 image: 'images/choice_31_1.png',
                 isCorrect: false,
-                successChance: 0.4,
+                successChance: 0.5,
                 successText: '좋은 생각이었다. 유청을 먹은 가축은 더 건강해졌다. 하지만 이것은 문제를 살짝 비껴간 해결책일 뿐, <span class="highlight-yellow">당장 겨울을 보낼 사람의 식량</span>을 만들지는 못했다.',
                 failureText: '결과적으로 아무것도 얻지 못했다. 유청을 먹여도 가축이 두 배로 늘지는 않았다. 결국 <span class="highlight-yellow">소중한 영양분을 가축에게 다 줘버린 셈</span>이 되어 겨울 동안 배고픔에 시달렸다.<br> ❤️ -4',
                 failureDamage: 4
@@ -951,11 +951,11 @@ const SITUATIONS = [
                 text: '차가운 계곡물에 담가 음료수로 보관', 
                 image: 'images/choice_31_2.png',
                 isCorrect: false,
-                failureText: '끔찍한 실수였다. 유청은 우유보다 훨씬 빨리 상해 며칠 만에 시큼하게 변했다. 당신은 <span class="highlight-yellow">오래 보관할 음식을 만들어야 하는 상황</span>에서 가장 보관 기간이 짧은 선택을 했다.<br> ❤️ -6',
+                failureText: '실수였다. 유청은 우유보다 훨씬 빨리 상해 며칠 만에 시큼하게 변했다. 당신은 <span class="highlight-yellow">오래 보관할 음식을 만들어야 하는 상황</span>에서 가장 보관 기간이 짧은 선택을 했다.<br> ❤️ -6',
                 failureDamage: 6
             },
             { 
-                text: '큰 솥에 넣고 끓여서 굳힘', 
+                text: '큰 솥에 넣고 끓여서 굳혀 보존함', 
                 image: 'images/choice_31_3.png',
                 isCorrect: true,
                 successText: '위대한 발견이다. 액체 유청은 오랜 시간 졸이자 캐러멜처럼 달콤하고 열량이 높은 <span class="highlight-yellow">갈색의 단단한 덩어리</span>로 변했다. 오래 보관할 수도 있어 겨울을 나는 데 큰 힘이 되었다.<br>✨ +{xpGained}',
@@ -984,7 +984,7 @@ const SITUATIONS = [
                 text: '물로 하루에 한 번 씻는다', 
                 image: 'images/choice_32_2.png',
                 isCorrect: false,
-                failureText: '아주 큰 실수였다. 몸을 씻는 데 쓴 물은 부족 전체가 하루 동안 마실 수 있는 양이었다. <span class="highlight-yellow">가장 귀한 자원인 물을 낭비</span>하여 마을 전체를 생존의 위험에 빠뜨렸다.<br> ❤️ -7',
+                failureText: '실수였다. 몸을 씻는 데 쓴 물은 부족 전체가 하루 동안 마실 수 있는 양이었다. <span class="highlight-yellow">가장 귀한 자원인 물을 낭비</span>하여 마을 전체를 생존의 위험에 빠뜨렸다.<br> ❤️ -7',
                 failureDamage: 7
             },
             { 
@@ -1017,10 +1017,8 @@ const SITUATIONS = [
                 text: '창과 도끼', 
                 image: 'images/choice_33_2.png',
                 isCorrect: false,
-                successChance: 0.1,
-                successText: '기적적으로 사냥감이 알아채기 전에 나무 위로 올라가는 데 성공했다. 놀랍게 몸을 숨긴 덕분에 겨우 사냥에 성공했지만, 다시 하기 힘든 행운이었다.',
-                failureText: '나무를 오르자마자 <span class="highlight-yellow">나뭇잎 바스락거리는 소리</span>에 놀란 사냥감이 순식간에 다른 나무로 달아나 버렸다. 사람이 원숭이보다 나무를 잘 탈 수는 없었다.<br> ❤️ -3',
-                failureDamage: 3
+                failureText: '당신이 아무리 무기를 잘 쓰더라도, <span class="highlight-yellow">무성하게 자란 식물</span> 때문에 원활하게 사냥할 수 없었다. 사냥에 실패했다. 상처만 남았다.<br> ❤️ -3',
+                failureDamage: 5
             },
             { 
                 text: '대롱에 독침을 넣어, 입으로 불어 쏘는 도구', 
@@ -1173,41 +1171,6 @@ const SITUATIONS = [
         ]
     },
     {
-        id: 38,
-        title: '북쪽의 부름',
-        type: '기타',
-        image: 'images/situation_38.jpg',
-        text: `당신은 20세기 초 알래스카에 처음 온 사람이다. 이곳에는 길이 없고, 세상은 <span class="highlight-yellow">깊은 눈과 얼음</span>으로 뒤덮여 있다. 눈밭을 가로지를 운송 수단이 꼭 필요하다. 이 동물은 <span class="highlight-yellow">아주 심한 추위를 견디고, 눈 위를 잘 달려야 하며</span>, 먼 거리를 갈 끈기가 있어야 한다. 어떤 동물을 당신의 동료로 삼겠는가?`,
-        choices: [
-            { 
-                text: '힘이 좋고 지구력이 강한 말', 
-                image: 'images/choice_38_1.png',
-                isCorrect: false,
-                failureText: '아주 큰 실수였다. 말은 <span class="highlight-yellow">깊은 눈에 발이 빠져</span> 앞으로 나아가지 못했고, 매서운 추위에 금방 지쳐버렸다. 당신은 눈밭 한가운데서 외톨이가 되었다.<br> ❤️ -6',
-                failureDamage: 6
-            },
-            { 
-                text: '추위에 강한 순록', 
-                image: 'images/choice_38_2.png',
-                isCorrect: false,
-                successChance: 0.2,
-                successText: '순록은 추위는 잘 견뎠지만 다루기 어렵고 발이 느렸다. <span class="highlight-yellow">느린 속도와 어수선함</span> 때문에, 당신은 목적지까지 예상보다 몇 배나 긴 시간을 낭비했다.',
-                failureText: '계획은 실패했다. 순록은 길들여지지 않은 야생의 성질이 강해, 당신의 지시를 따르지 않고 흩어져 버렸다. 당신은 <span class="highlight-yellow">순록을 다루는 데 실패</span>했고, 짐과 함께 눈밭에 남겨졌다.<br> ❤️ -4',
-                failureDamage: 4
-            },
-            { 
-                text: '추위에 강하고 발이 눈에 빠지지 않는 썰매개', 
-                image: 'images/choice_38_3.png',
-                isCorrect: true,
-                successText: '완벽한 동료다. 썰매개들은 <span class="highlight-yellow">지치지 않는 힘으로 눈 위를 달렸고</span>, 당신의 지시에 따라 질서정연하게 움직였다. 당신은 알래스카의 힘든 환경을 이겨낼 최고의 운송 수단을 찾았다.<br>✨ +{xpGained}',
-                info: {
-                    image: 'images/info_38.jpg',
-                    text: '알래스카의 <span class="highlight-yellow">\'개썰매\'</span> 문화는 매서운 추위의 눈밭 날씨에 적응하기 위한 꼭 필요한 생존 기술이었습니다. 말 같은 동물이 다닐 수 없는 <span class="highlight-yellow">깊은 눈밭</span>에서, 추위에 강하고 힘이 센 썰매개들은 우편물 배달, 물건 운반, 교통수단으로서 <span class="highlight-yellow">알래스카의 혈관과 같은 역할</span>을 했습니다.'
-                }
-            }
-        ]
-    },
-    {
         id: 39,
         title: '하늘 위의 도시',
         type: '기타',
@@ -1303,7 +1266,7 @@ const SITUATIONS = [
                 successText: '최고의 선택이다! 양모 치마는 <span class="highlight-yellow">비에 젖어도 몸을 따뜻하게 지켜주었고</span>, 치마 형태라 <span class="highlight-yellow">언덕을 오르내리기 아주 편했다</span>. 젖은 땅을 걸어도 바지가 젖을 걱정이 없었다.<br>✨ +{xpGained}',
                 info: {
                     image: 'images/info_41.jpg',
-                    text: '스코틀랜드의 전통 의상 <span class="highlight-yellow">\'킬트(Kilt)\'</span>는 춥고 습한 고원지대 환경에 딱 맞는 옷이다. <span class="highlight-yellow">젖어도 따뜻한 양털</span>로 만들고, <span class="highlight-yellow">험한 지형에서 움직이기 편하도록</span> 바지 대신 치마 형태로 만들어졌다. 밤에는 담요로도 사용할 수 있었다.'
+                    text: '스코틀랜드의 전통 의상 <span class="highlight-yellow">\'킬트(Kilt)\'</span>는 춥고 습한 고원지대 환경에 딱 맞는 옷이다. <span class="highlight-yellow">젖어도 따뜻한 양털</span>로 만들고, <span class="highlight-yellow">험한 지형에서 움직이기 편하도록</span> 바지 대신 치마 형태로 만들어졌다.'
                 }
             }
         ]
@@ -1313,7 +1276,7 @@ const SITUATIONS = [
         title: '새로운 시대의 춤',
         type: '의',
         image: 'images/situation_42.jpg',
-        text: `1920년대, 제1차 세계대전이 끝나고 사회 분위기가 바뀌었다. <span class="highlight-yellow">여성들도 사회에서 목소리를 내기 시작</span>하며 더 자유로워지기를 원했다. 새 시대의 여성인 당신은 신나는 파티에 가기 위해, <span class="highlight-yellow">답답하고 불편한 옛날 옷</span>을 벗어 던지고 싶다. 어떤 옷을 선택하겠는가?`,
+        text: `1920년대, 제1차 세계대전이 끝나고 사회 분위기가 바뀌었다. <span class="highlight-yellow">여성들도 사회에서 목소리를 내기 시작</span>하며 더 자유로워지기를 원했다. 새 시대의 여성인 당신은 신나는 파티에 가기 위해, <span class="highlight-yellow">답답하고 불편한, 몸을 많이 가리는 옛날 옷</span>을 벗어 던지고 싶다. 어떤 옷을 선택하겠는가?`,
         choices: [
             { 
                 text: '몸을 꽉 조이는 드레스', 
@@ -1323,17 +1286,17 @@ const SITUATIONS = [
                 failureDamage: 5
             },
             { 
-                text: '발목까지 오는 무거운 치마', 
+                text: '온몸을 감싸는 무거운 치마', 
                 image: 'images/choice_42_2.png',
                 isCorrect: false,
-                failureText: '빠른 음악에 맞춰 춤을 추기에는 치마가 <span class="highlight-yellow">너무 길고 무거웠다</span>. 새로운 시대의 <span class="highlight-yellow">활기찬 분위기</span>를 전혀 따라갈 수 없었다. 결국 구석에 앉아 있어야만 했다.<br> ❤️ -4',
+                failureText: '빠른 음악에 맞춰 춤을 추기에는 치마가 <span class="highlight-yellow">길고 무거웠다</span>. 새 시대의 자유로운 여성이라기엔 <span class="highlight-yellow">너무 답답했다.</span><br> ❤️ -4',
                 failureDamage: 4
             },
             { 
                 text: '짧고 장식이 달린 헐렁한 원피스', 
                 image: 'images/choice_42_3.png',
                 isCorrect: true,
-                successText: '훌륭하다! 몸에 달라붙지 않아 <span class="highlight-yellow">아주 편하고</span>, 짧은 길이 덕분에 <span class="highlight-yellow">마음껏 춤을 출 수 있었다</span>. 당신은 파티에서 가장 빛나는 <span class="highlight-yellow">새로운 여성</span>이 되었다.<br>✨ +{xpGained}',
+                successText: '훌륭하다! 몸에 달라붙지 않아 <span class="highlight-yellow">아주 편하고</span>, 짧은 길이가 <span class="highlight-yellow">자유로운 여성상을 보여주는 듯 했다</span>.<br>✨ +{xpGained}',
                 info: {
                     image: 'images/info_42.jpg',
                     text: '1920년대에 유행한 <span class="highlight-yellow">\'플래퍼(Flapper) 드레스\'</span>는 인문환경의 변화를 잘 보여준다. 전쟁 이후 <span class="highlight-yellow">여성의 사회적 지위가 높아지자</span>, 여성들은 몸을 조이는 옷 대신 <span class="highlight-yellow">자유롭게 활동하고 춤추기 편하도록</span> 짧고 헐렁한 옷을 입기 시작했다. 이 옷에는 <span class="highlight-yellow">자유를 향한 여성들의 생각</span>이 담겨 있다.'
@@ -1389,10 +1352,10 @@ const SITUATIONS = [
                 failureDamage: 6
             },
             { 
-                text: '주변에 흔한 소금으로 만들기', 
+                text: '카카오 대신 소금만 사용하기', 
                 image: 'images/choice_44_2.png',
                 isCorrect: false,
-                failureText: '짠맛이 나는 스프레드는 아무도 좋아하지 않았다. 사람들은 달콤한 것을 원했다.<br> ❤️ -4',
+                failureText: '초콜릿 맛 없이 짠맛만 나는 스프레드는 아무도 좋아하지 않았다. 사람들은 달콤한 것을 원했다.<br> ❤️ -4',
                 failureDamage: 4
             },
             { 
