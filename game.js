@@ -49,6 +49,18 @@ document.addEventListener('DOMContentLoaded', () => {
             rerollButton: $('reroll-perks-button'), // 다시 뽑기 버튼 추가
             list: $('perk-list'),
         },
+        finalStats: {
+            gameOver: { ui: $('game-over-count-ui'), sik: $('game-over-count-sik'), ju: $('game-over-count-ju'), etc: $('game-over-count-etc') },
+            gameWin: { ui: $('game-win-count-ui'), sik: $('game-win-count-sik'), ju: $('game-win-count-ju'), etc: $('game-win-count-etc') },
+        },
+        info: {
+            image: $('info-image'),
+            text: $('info-text'),
+            choicesContainer: $('perk-choices-container'),
+            toggleButton: $('perk-toggle-button'),
+            rerollButton: $('reroll-perks-button'), // 다시 뽑기 버튼 추가
+            list: $('perk-list'),
+        },
         info: {
             image: $('info-image'),
             text: $('info-text'),
@@ -1232,11 +1244,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function gameOver(reason = '체력이 모두 소진되었습니다.') {
+        updateFinalStatsUI();
         ui.result.gameOverText.textContent = reason;
         showScreen('gameOver');
     }
 
     function gameWin() {
+        updateFinalStatsUI();
         let winMessage = `모든 부품을 모아 우주선을 수리했습니다. 행성을 탈출합니다!`;
         if (currentGameMode === 'emergency') {
             winMessage += `<br>남은 턴: ${15 - player.turns}`;
@@ -1255,6 +1269,18 @@ document.addEventListener('DOMContentLoaded', () => {
         showScreen('gameWin');
         ui.restartButtons[1].classList.remove('hidden');
     }
+
+    /** 게임 종료/승리 화면의 최종 기록 UI를 업데이트합니다. */
+    function updateFinalStatsUI() {
+        const counts = player.correctAnswersByType;
+        const { gameOver, gameWin } = ui.finalStats;
+
+        gameOver.ui.textContent = gameWin.ui.textContent = counts['의'] || 0;
+        gameOver.sik.textContent = gameWin.sik.textContent = counts['식'] || 0;
+        gameOver.ju.textContent = gameWin.ju.textContent = counts['주'] || 0;
+        gameOver.etc.textContent = gameWin.etc.textContent = counts['기타'] || 0;
+    }
+
 
     // --- 6. 이벤트 리스너 ---
     ui.startButton.addEventListener('click', showModeSelection);

@@ -425,6 +425,16 @@ button .highlight-yellow {
     opacity: 0;
 }
 
+/* --- 최종 기록 컨테이너 스타일 --- */
+.final-stats-container {
+    background-color: #2a2a2a;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ccc;
+}
+
 /* --- 디버그 패널 스타일 --- */
 #debug-panel {
     position: absolute;
