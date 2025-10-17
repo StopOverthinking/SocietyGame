@@ -429,11 +429,12 @@ const SITUATIONS = [
             { 
                 text: '닭고기 카레', 
                 image: 'images/choice_13_2.png',
-                isCorrect: false,
-                successChance: 0.7,
-                successText: '다행히 그 가족은 닭고기를 먹었다. 하지만 집주인이 설명해주었다. "맛있게 먹겠습니다. 하지만 <span class="highlight-yellow">아힘사 정신에 따라 고기를 안 먹는 힌두교도</span>도 많습니다."',
-                failureText: '집주인은 곤란한 표정으로 말했다. "죄송하지만 저희 가족은 <span class="highlight-yellow">아힘사 가르침에 따라 어떤 고기도 먹지 않습니다.</span>" 당신의 요리에는 아무도 손대지 못했다.<br> ❤️ -4',
-                failureDamage: 4
+                isCorrect: true,
+                successText: '좋은 선택이었다. 힌두교에서는 소를 신성하게 여기지만, 닭고기는 먹는 사람도 많습니다. 당신의 선물 덕분에 모두가 즐거운 식사를 할 수 있었다.<br>✨ +{xpGained}',
+                info: {
+                    image: 'images/info_13.jpg',
+                    text: '인도 음식 문화의 큰 특징은 힌두교의 영향이다. 생명을 소중히 여기는 <span class="highlight-yellow">힌두교</span> 가르침에 따라 많은 힌두교 신자들이 채식을 하며, 특히 닭고기, 양고기는 먹더라도 <span class="highlight-yellow">신성하게 여기는 소는 절대 먹지 않는다.</span>'
+                }
             },
             { 
                 text: '채식 카레', 
@@ -442,7 +443,7 @@ const SITUATIONS = [
                 successText: '완벽한 선택이었다. 집주인은 당신의 채식 카레를 보고 활짝 웃으며 고마워했다. "저희 문화를 존중해주셨군요. <span class="highlight-yellow">모든 생명을 소중히 여기는 마음</span>이 담긴 훌륭한 선물입니다."<br>✨ +{xpGained}',
                 info: {
                     image: 'images/info_13.jpg',
-                    text: '인도 음식 문화의 큰 특징은 힌두교의 영향이다. 생명을 소중히 여기는 <span class="highlight-yellow">\'아힘사\'</span> 가르침에 따라 많은 힌두교 신자들이 채식을 하며, 특히 <span class="highlight-yellow">신성하게 여기는 소는 절대 먹지 않는다.</span>'
+                    text: '인도 음식 문화의 큰 특징은 힌두교의 영향이다. 생명을 소중히 여기는 <span class="highlight-yellow">힌두교</span> 가르침에 따라 많은 힌두교 신자들이 채식을 하며, 특히 닭고기, 양고기는 먹더라도 <span class="highlight-yellow">신성하게 여기는 소는 절대 먹지 않는다.</span>'
                 }
             }
         ]
@@ -783,10 +784,10 @@ const SITUATIONS = [
                 text: '화산암 벽을 흰색으로 칠한 집', 
                 image: 'images/choice_25_3.png',
                 isCorrect: true,
-                successText: '완벽한 설계였다. 하얀 벽은 햇빛을 튕겨내 집 안을 시원하게 유지했고, 둥근 지붕은 <span class="highlight-yellow">바닷바람의 저항을 가장 적게 받아</span> 안정성을 높였다.<br>✨ +{xpGained}',
+                successText: '완벽한 설계였다. <span class="highlight-yellow">하얀 벽은 햇빛을 튕겨내 집 안을 시원하게 유지했다.</span> 덕분에 더운 날씨에도 집 안이 쾌적했다. <br>✨ +{xpGained}',
                 info: {
                     image: 'images/info_25.jpg',
-                    text: '그리스 산토리니의 건물들은 지중해 자연환경에 가장 알맞게 만들어졌다. <span class="highlight-yellow">하얀색 벽</span>은 햇빛을 튕겨내 집 안 온도를 낮추고, <span class="highlight-yellow">둥근 지붕</span>은 강한 바람의 영향을 줄인다. <span class="highlight-yellow">나무가 귀한 환경</span>에서 주변의 돌과 흙을 주재료로 쓴 것은 좋은 선택이었다.'
+                    text: '그리스 산토리니의 건물들은 지중해 자연환경에 가장 알맞게 만들어졌다. <span class="highlight-yellow">하얀색 벽</span>은 햇빛을 튕겨내 집 안 온도를 낮춘다. 또 나무가 귀한 환경에서 주변의 돌과 흙을 주재료로 쓴다.'
                 }
             }
         ]
