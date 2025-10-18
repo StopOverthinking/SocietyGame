@@ -93,11 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. 게임 데이터 (상수) ---
     const PARTS_DATA = [
-        { id: '동력 코어', name: '동력 코어', image: 'images/part_core.jpg' },
-        { id: '항법 장치', name: '항법 장치', image: 'images/part_nav.jpg' },
-        { id: '선체 안정기', name: '선체 안정기', image: 'images/part_stabilizer.jpg' },
-        { id: '통신 모듈', name: '통신 모듈', image: 'images/part_comm.jpg' },
-        { id: '생명 유지 장치', name: '생명 유지 장치', image: 'images/part_life_support.jpg' }
+        { id: '동력 코어', name: '동력 코어', image: 'images/part_core.png' },
+        { id: '항법 장치', name: '항법 장치', image: 'images/part_nav.png' },
+        { id: '선체 안정기', name: '선체 안정기', image: 'images/part_stabilizer.png' },
+        { id: '통신 모듈', name: '통신 모듈', image: 'images/part_comm.png' },
+        { id: '생명 유지 장치', name: '생명 유지 장치', image: 'images/part_life_support.png' }
     ];
     const PARTS_TO_COLLECT = PARTS_DATA.map(p => p.id);
     
@@ -614,6 +614,13 @@ document.addEventListener('DOMContentLoaded', () => {
         partButton.onclick = () => selectReward({ type: 'part_search' });
         ui.perk.choicesContainer.appendChild(partButton);
 
+        // 부품 탐색과 특성 선택 사이에 구분선 추가
+        if (!player.perks['desperate_dash']) { // '목숨을 건 질주'가 아닐 때만 구분선 표시
+            const separator = document.createElement('hr');
+            separator.className = 'perk-separator';
+            ui.perk.choicesContainer.appendChild(separator);
+        }
+
         // '목숨을 건 질주' 특성이 있으면 다른 특성 선택지를 표시하지 않음
         if (player.perks['desperate_dash']) {
             const p = document.createElement('p');
@@ -649,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 description = description.replace('{value}', value);
             }
-            button.innerHTML = `[특성 획득] ${perk.name}: ${description}`;
+            button.innerHTML = `[특성 획득] ${perk.name}:<br>${description}`;
             button.onclick = () => selectReward({ type: 'perk', value: perk });
             ui.perk.choicesContainer.appendChild(button);
         }
@@ -923,7 +930,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (value !== undefined && description.includes('{value}')) {
                 description = description.replace('{value}', value);
             }
-            li.innerHTML = `${name}: ${description}`;
+            li.innerHTML = `${name}:<br>${description}`;
             ui.perk.list.appendChild(li);
         }
 
@@ -1147,7 +1154,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
         STARTING_PERKS.forEach(perk => {
             const button = document.createElement('button');
-            button.innerHTML = `${perk.name}: ${perk.description}`;
+            button.innerHTML = `${perk.name}:<br>${perk.description}`;
             button.onclick = () => selectStartingPerk(perk);
             ui.startingPerk.choicesContainer.appendChild(button);
         });

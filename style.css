@@ -10,6 +10,7 @@ body {
     margin: 0;
     padding: 16px;
     box-sizing: border-box;
+    word-break: keep-all; /* 단어 단위 줄바꿈 적용 */
 }
 
 
@@ -104,6 +105,15 @@ button:active {
     gap: 10px;
     margin-top: 15px;
 }
+
+/* 특성 선택 화면의 구분선 스타일 */
+hr.perk-separator {
+    border: none;
+    border-top: 1px solid #444;
+    margin: 5px 0; /* 위아래 여백을 gap과 비슷하게 조정 */
+    width: 100%;
+}
+
 
 /* 선택지 버튼 특별 스타일 */
 .choice-button {
