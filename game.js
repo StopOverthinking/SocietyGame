@@ -131,6 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'fruit_of_patience', name: '🌱 인내의 결실', type: 'stackable', baseValue: { xpIncrease: 0.2, partChance: 0.25 }, description: '레벨업 시 요구 경험치 증가량이 중첩 당 <span class="highlight-yellow">20%p</span> 늘어나지만, 부품 탐색 성공 확률이 <span class="highlight-yellow">25%p</span> 증가합니다.' },
     ];
 
+    // PERKS 배열을 ID 기반의 객체로 변환하여 빠른 조회를 위함
+    const PERKS_MAP = PERKS.reduce((acc, perk) => {
+        acc[perk.id] = perk;
+        return acc;
+    }, {});
+
     // --- 3. 게임 상태 (변수) ---
     let player;
     let infoToShow;
@@ -390,18 +396,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!player.perks['desperate_dash']) {
                     player.hp = Math.min(player.maxHp, player.hp + 5);
                     updateStatsUI();
-                    setTimeout(() => showToast(`[명상] 발동! 아이템 구매 후 3연속 정답으로 체력을 5 회복합니다!`, 2500), 1000);
-                } else {
-                    setTimeout(() => showToast(`[명상] 효과가 발동했지만, [목숨을 건 질주]로 인해 체력이 회복되지 않습니다.`, 3000), 1000);
                 }
             }
 
             // '꾸준한 학습' 특성 처리
             const stacks = player.perks['steady_learning'] || 0;
-            const bonusPerStack = PERKS.find(p => p.id === 'steady_learning')?.baseValue || 0;
+            const bonusPerStack = PERKS_MAP['steady_learning']?.baseValue || 0;
             const bonusGained = stacks * bonusPerStack;
             player.steadyLearningBonus += bonusGained;
-            if (bonusGained > 0) setTimeout(() => showToast(`[꾸준한 학습] 발동! 부품 탐색 확률이 영구적으로 ${Math.round(bonusGained * 100)}%p 증가합니다!`, 3000), 1100);
 
             if (choice.info) infoToShow = choice.info;
             gainXp(baseXP);
@@ -455,18 +457,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (player.perks['meditation'] && player.meditationStreak > 0 && player.meditationStreak % 2 === 0) {
                 if (!player.perks['desperate_dash']) {
                     player.hp = Math.min(player.maxHp, player.hp + 5);
-                    setTimeout(() => showToast(`[명상] 발동! 아이템 구매 후 2연속 정답으로 체력을 5 회복합니다!`, 2500), 1000);
-                } else {
-                    setTimeout(() => showToast(`[명상] 효과가 발동했지만, [목숨을 건 질주]로 인해 체력이 회복되지 않습니다.`, 3000), 1000);
                 }
             }
 
             // '꾸준한 학습' 특성 처리
             const stacks = player.perks['steady_learning'] || 0;
-            const bonusPerStack = PERKS.find(p => p.id === 'steady_learning')?.baseValue || 0;
+            const bonusPerStack = PERKS_MAP['steady_learning']?.baseValue || 0;
             const bonusGained = stacks * bonusPerStack;
             player.steadyLearningBonus += bonusGained;
-            if (bonusGained > 0) setTimeout(() => showToast(`[꾸준한 학습] 발동! 부품 탐색 확률이 영구적으로 ${Math.round(bonusGained * 100)}%p 증가합니다!`, 3000), 1100);
         } else {
             const damage = 5; // 복습 문제 오답 시 고정 피해
             await processDamage(damage, `오답입니다. 정답을 다시 확인해 보세요.<br> ❤️ -${damage}`);
@@ -567,9 +565,17 @@ document.addEventListener('DOMContentLoaded', () => {
         player.xp += calculateXpGained(amount);
         // 한 번에 여러 번 레벨업이 가능하도록 while 루프 사용
         while (player.xp >= player.xpToLevelUp) {
-            const patienceStacks = player.perks['fruit_of_patience'] || 0;
-            const patienceXpIncrease = patienceStacks > 0 ? PERKS.find(p => p.id === 'fruit_of_patience').baseValue.xpIncrease * patienceStacks : 0;
-            const xpMultiplier = 1.2 + patienceXpIncrease; // 기본 20% + 인내의 결실 보너스
+            const patienceStacks = player.perks['fruit_of_patience'] || 0; // 아이템으로 변경
+            const patienceXpIncrease = patienceStacks > 0 ? PERKS_MAP['fruit_of_patience'].baseValue.xpIncrease * patienceStacks : 0;
+            
+            let baseMultiplier = 1.2;
+            // 모드별로 경험치 증가율 완화 조건 다르게 설정
+            if (currentGameMode === 'hard' || currentGameMode === 'very_hard') {
+                if (player.xpToLevelUp > 20) baseMultiplier = 1.1;
+            } else {
+                if (player.xpToLevelUp > 10) baseMultiplier = 1.1;
+            }
+            const xpMultiplier = baseMultiplier + patienceXpIncrease;
 
             player.xp -= player.xpToLevelUp;
             player.xpToLevelUp = Math.floor(player.xpToLevelUp * xpMultiplier);
@@ -775,7 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         setTimeout(() => showToast(`[목숨을 건 질주] 효과로 체력이 회복되지 않습니다.`, 2000), 500);
                     }
                 } else if (perk.id === 'forbidden_deal') {
-                    setTimeout(() => showToast(`[미지의 힘] 효과로 무작위 특성 2개를 획득합니다.`, 2500), 500);
+                    setTimeout(() => showToast(`[미지의 힘] 효과로 무작위 특성 2개를 획득합니다.`, 3500), 500);
                     setTimeout(() => grantRandomPerk(), 1500);
                     setTimeout(() => grantRandomPerk(), 2500);
                 }
@@ -817,7 +823,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // '행운의 발견' 아이템 처리
             if (player.perks['lucky_find']) {
                 const stacks = player.perks['lucky_find'];
-                const chance = PERKS.find(p => p.id === 'lucky_find').baseValue;
+                const chance = PERKS_MAP['lucky_find'].baseValue;
                 if (Math.random() < chance * stacks) {
                     const availableParts = PARTS_TO_COLLECT.filter(part => !player.parts.includes(part));
                     if (availableParts.length > 0) {
@@ -862,7 +868,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const perks = player.perks;
         
         // '빠른 학습'의 순수 합연산 보너스
-        const fastLearnerAdditiveBonus = (perks.fast_learner || 0) * PERKS.find(p => p.id === 'fast_learner').baseValue;
+        const fastLearnerAdditiveBonus = (perks.fast_learner || 0) * PERKS_MAP['fast_learner'].baseValue;
         
         // '유리 대포'의 경험치 배율
         const glassCannonXpMultiplier = perks.glass_cannon ? 1.5 : 1;
@@ -874,10 +880,10 @@ document.addEventListener('DOMContentLoaded', () => {
             fastLearnerAdditiveBonus: fastLearnerAdditiveBonus,
             glassCannonXpMultiplier: glassCannonXpMultiplier,
             partDiscoveryChance: basePartChance +
-                                 ((perks.scavenger || 0) * PERKS.find(p => p.id === 'scavenger').baseValue) +
+                                 ((perks.scavenger || 0) * PERKS_MAP['scavenger'].baseValue) +
                                  (player.steadyLearningBonus || 0) +
                                  (perks.dimensional_detector_a && perks.dimensional_detector_b ? 0.4 : 0) + // 차원 탐지기 세트 효과
-                                 ((perks.fruit_of_patience || 0) * PERKS.find(p => p.id === 'fruit_of_patience').baseValue.partChance) // 인내의 결실 효과
+                                 ((perks.fruit_of_patience || 0) * PERKS_MAP['fruit_of_patience'].baseValue.partChance) // 인내의 결실 효과
         };
 
         // '목숨을 건 질주' 효과: 부품 획득 확률 2배 // 아이템으로 변경
@@ -907,7 +913,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 보유 특성 먼저 표시
         for (const perkId in player.perks) {
             const stack = player.perks[perkId];
-            const perkData = PERKS.find(p => p.id === perkId); // perkData가 null일 수 있음
+            const perkData = PERKS_MAP[perkId]; // perkData가 null일 수 있음
             if (!perkData) continue;
 
             const li = document.createElement('li');
@@ -928,6 +934,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (value !== undefined && description.includes('{value}')) {
                 description = description.replace('{value}', value);
             }
+            // '꾸준한 학습'의 경우, 누적된 보너스를 설명에 추가
+            if (perkId === 'steady_learning' && player.steadyLearningBonus > 0) {
+                description += ` (현재 총 +${Math.round(player.steadyLearningBonus * 100)}%p)`;
+            }
             li.innerHTML = `${name}:<br>${description}`;
             ui.perk.list.appendChild(li);
         }
@@ -936,19 +946,13 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const perkId in player.removedPerks) {
             if (player.perks[perkId]) continue; // 아직 보유 중이면 건너뛰기
 
-            const perkData = PERKS.find(p => p.id === perkId);
+            const perkData = PERKS_MAP[perkId];
             if (!perkData) continue;
 
             const li = document.createElement('li');
             li.classList.add('removed');
             // 제거된 아이템은 효과 설명 없이 이름만 표시
             li.innerHTML = `<strong>${perkData.name}</strong>: ${perkData.description}`;
-            ui.perk.list.appendChild(li);
-        }
-
-        if (player.steadyLearningBonus > 0) {
-            const li = document.createElement('li');
-            li.innerHTML = `<strong>[꾸준한 학습 효과]</strong>: 부품 탐색 확률 +${Math.round(player.steadyLearningBonus * 100)}%p`;
             ui.perk.list.appendChild(li);
         }
     }
@@ -1219,7 +1223,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (player.perks['desperate_dash']) { // 아이템으로 변경
             player.hp -= 1;
             updateStatsUI(); // UI에 즉시 반영
-            showToast('[목숨을 건 질주] 효과로 체력을 1 잃습니다.', 1500);
         }
         
         // '운명 뒤집기' 아이템이 있다면, 레벨업 시 다시 뽑기 기회를 1회 부여합니다.
