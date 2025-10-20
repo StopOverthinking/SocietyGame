@@ -143,14 +143,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 4. 핵심 로직 및 게임 흐름 ---
 
     /** 게임을 초기 상태로 설정합니다. */
-    function initGame() {
-        // currentGameMode는 이 함수 호출 전에 설정되어 있어야 합니다.
+    function initGame(mode = 'easy') {
+        currentGameMode = mode;
         player = {
             hp: 20,
             maxHp: 20,
             shield: 0, // 보호막 속성 추가
             xp: 0, 
-            xpToLevelUp: (currentGameMode === 'hard' || currentGameMode === 'very_hard') ? 10 : 5, // 어려움/매우 어려움 모드 초기 경험치 요구량 10
+            xpToLevelUp: (mode === 'hard' || mode === 'very_hard') ? 10 : 5, // 어려움/매우 어려움 모드 초기 경험치 요구량 10
             parts: [],
             perks: {}, // { perkId: stackCount } // 아이템으로 변경
             removedPerks: {}, // 제거된 아이템 추적 { perkId: true }
@@ -170,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }; 
         infoToShow = null;
         currentSituation = null;
-        // isLevelUpPending = false;
         canRerollPerks = false;
         player.meditationStreak = 0;
         player.steadyLearningStreak = 0;
@@ -179,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ui.perk.list.innerHTML = '';
         ui.perk.list.classList.add('hidden');
-        ui.restartButtons[1].classList.add('hidden'); // 게임 클리어 재시작 버튼 숨기기
         updatePartsUI();
         updateStatsUI();
         updateStreakUI(); // 초기화 시 연속 정답 UI도 업데이트
@@ -1138,10 +1136,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /** 선택한 게임 모드를 설정하고 시작 특성 선택으로 넘어갑니다. */
     function selectGameMode(modeId) {
         currentGameMode = modeId;
+        initGame(modeId); // 게임 상태를 선택한 모드로 초기화
         showToast(`[${modeId.charAt(0).toUpperCase() + modeId.slice(1)} 모드]로 시작합니다.`, 2000);
 
         if (modeId === 'hard' || modeId === 'very_hard') {
-            startGame(); // 어려움/매우 어려움 모드는 아이템 구매 없이 바로 시작
+            startGame(); // 아이템 선택 없이 바로 게임 시작
         } else {
             showStartingPerkSelection(); // 시작 특성 선택 화면으로 이동
         }
@@ -1195,7 +1194,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startGame() {
-        initGame(); // 게임을 실제로 시작할 때 상태를 초기화합니다.
         showScreen('game');
         nextSituation();
     }
@@ -1296,7 +1294,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ui.parts.toggleButton.addEventListener('click', () => ui.parts.slotsWrapper.classList.toggle('hidden'));
     ui.confidenceButton.addEventListener('click', useConfidence);
     ui.perk.toggleButton.addEventListener('click', () => ui.perk.list.classList.toggle('hidden'));
-    ui.restartButtons.forEach(button => button.addEventListener('click', initGame));
+    ui.restartButtons.forEach(button => button.addEventListener('click', () => {
+        initGame(); // 기본 모드로 초기화
+        showScreen('start'); // 시작 화면으로 이동
+    }));
     ui.perk.rerollButton.addEventListener('click', () => {
         if (canRerollPerks) {
             canRerollPerks = false; // 다시 뽑기 기회 사용
@@ -1438,6 +1439,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 7. 게임 시작 ---
     initGame(); // 페이지 로드 시 게임 상태를 한 번 초기화합니다.
-    showScreen('start'); // 그 후 시작 화면을 표시합니다.
     setupDebugMode(); // 디버그 모드 활성화
 });
